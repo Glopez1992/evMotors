@@ -14,31 +14,23 @@ create table VehicleRegister (
 			alter column EngineSize varchar(10) NOT NULL;
 
 
--- 2. Create Non-Clustered Indexes on Searchable columns
-	create nonclustered index idx_vehicle_make on VehicleRegister (Make);
-	create nonclustered index idx_vehicle_date_registered on VehicleRegister (DateRegistered);
-	create nonclustered index idx_vehicle_rental_per_day on VehicleRegister (RentalPerDay);
-	create nonclustered index idx_vehicle_available on VehicleRegister (Available);
+-- 2. Changing Primry key name
 
-----------------------------------------------------------------------------------
---Database not big enough (only 200 records) to use these: 
+	-- Find the existing primary key name
+	select name 
+	from sys.key_constraints 
+	where type = 'PK' and parent_object_id = object_id('VehicleRegister');
 
--- 3. Composite Indexes
-	-- if you regularly filter or sort by multiple columns together, like:
-	/* where Make = 'Toyota' and Available = 1 */
+	-- Drop the old primary key constraint:
+	alter table VehicleRegister
+	drop constraint PK__VehicleR__F38BC73376F7BD5C;
 
-	create nonclustered index idx_make_available on VehicleRegister (Make, Available);
+	-- Add it again with a new name:
+	alter table VehicleRegister
+	add constraint PK_VehicleRegNo primary key (VehicleRegNo);
 
--- 4. Filtered Indexes
-	/* if you you often query only available vehicles: */
-		
-		select * from VehicleRegister where Available = 1;
 
-		-- Then this index would be more efficient than indexing all values:
 
-		create nonclustered index idx_available_only on VehicleRegister (Available)
-		where Available = 1;
-------------------------------------------------------------------------------------
 
 
 
