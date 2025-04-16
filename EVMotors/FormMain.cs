@@ -18,7 +18,7 @@ namespace WinFormsApp1
         private DataTable dataTable = null;
         private bool dataChanged = true;
 
-        private int currentIndex = 0;
+        private int currentIndex = 1;
 
 
         public FormMain()
@@ -61,7 +61,7 @@ namespace WinFormsApp1
             dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
             txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
 
-            btnPrevious.Enabled = currentIndex > 0;
+            btnPrevious.Enabled = currentIndex > 1;
             btnFirst.Enabled = currentIndex > 0;
             btnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
             this.Text = $"Current Table Index:  {currentIndex}";
