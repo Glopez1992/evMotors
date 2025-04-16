@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Data;
 using System.IO;
@@ -79,13 +80,49 @@ namespace WinFormsApp1
             try
             {
                 string vehicleRegNo = txtVehicleRegNo.Text;
+                if(string.IsNullOrWhiteSpace(vehicleRegNo))
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot be empty", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtVehicleRegNo.Clear();
+                    return;
+                }
+                if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtVehicleRegNo.Clear();
+                    return; // Stop execution if validation fails
+                }
+
                 string make = cobMake.Text;
+                if (string.IsNullOrWhiteSpace(make))
+                {
+                    MessageBox.Show("Make is a required field.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (make.Length > 50)
+                {
+                    MessageBox.Show("Make cannot exceed 50 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string engineSize = txtEngineSize.Text;
-                DateTime dateRegistered = dateTimePicker1.Value;
-                decimal rentalPerDay = decimal.Parse(txtRentalPerDay.Text);
+               
+                DateTime dateRegistered;
+                if (!DateTime.TryParse(dateTimePicker1.Value.ToString(), out dateRegistered) || dateRegistered > DateTime.Now)
+                {
+                    MessageBox.Show("Date Registered must be a valid date and not in the future.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                decimal rentalPerDay;
+                if (!decimal.TryParse(txtRentalPerDay.Text, out rentalPerDay))
+                {
+                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 bool available = chkAvailable.Checked;
-                InputValidate(vehicleRegNo);
-                System.Console.WriteLine("output");
+                ;
+               
 
                 // create and open connection
                 using (connection = new SqlConnection(connectionString))
@@ -207,11 +244,11 @@ namespace WinFormsApp1
 
         private void InputValidate(string vehicleRegNo)
         {
-            if (vehicleRegNo.Length > 10)
-            {
-                throw new ArgumentOutOfRangeException
-                    ("Please enter a valid Vehicle Registration Number (Less than 10 Characters");     
-            }
+             if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Stop execution if validation fails
+                }
         }
-    }
+    } 
 }
