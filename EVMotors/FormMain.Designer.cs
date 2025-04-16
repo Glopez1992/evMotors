@@ -35,11 +35,12 @@
             btnCancel = new Button();
             btnDelete = new Button();
             btnExit = new Button();
-            btnFirst = new Button();
-            btnPrevious = new Button();
-            btnNext = new Button();
-            btnLast = new Button();
+            BtnFirst = new Button();
+            BtnPrevious = new Button();
+            BtnNext = new Button();
+            BtnLast = new Button();
             groupBox1 = new GroupBox();
+            dateTimePicker1 = new DateTimePicker();
             cobMake = new ComboBox();
             chkAvailable = new CheckBox();
             txtRentalPerDay = new TextBox();
@@ -54,7 +55,6 @@
             lblEngineSize = new Label();
             lblVehicleRegNumber = new Label();
             label1 = new Label();
-            dateTimePicker1 = new DateTimePicker();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -164,73 +164,77 @@
             btnExit.Text = "EXIT";
             btnExit.UseVisualStyleBackColor = false;
             // 
-            // btnFirst
+            // BtnFirst
             // 
-            btnFirst.BackColor = Color.Black;
-            btnFirst.BackgroundImage = (Image)resources.GetObject("btnFirst.BackgroundImage");
-            btnFirst.BackgroundImageLayout = ImageLayout.Stretch;
-            btnFirst.FlatAppearance.BorderSize = 0;
-            btnFirst.FlatStyle = FlatStyle.Flat;
-            btnFirst.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnFirst.ForeColor = Color.FromArgb(47, 116, 193);
-            btnFirst.Location = new Point(53, 402);
-            btnFirst.Margin = new Padding(3, 2, 3, 2);
-            btnFirst.Name = "btnFirst";
-            btnFirst.Size = new Size(80, 26);
-            btnFirst.TabIndex = 6;
-            btnFirst.Text = "First";
-            btnFirst.UseVisualStyleBackColor = false;
+            BtnFirst.BackColor = Color.Black;
+            BtnFirst.BackgroundImage = (Image)resources.GetObject("BtnFirst.BackgroundImage");
+            BtnFirst.BackgroundImageLayout = ImageLayout.Stretch;
+            BtnFirst.FlatAppearance.BorderSize = 0;
+            BtnFirst.FlatStyle = FlatStyle.Flat;
+            BtnFirst.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnFirst.ForeColor = Color.FromArgb(47, 116, 193);
+            BtnFirst.Location = new Point(53, 402);
+            BtnFirst.Margin = new Padding(3, 2, 3, 2);
+            BtnFirst.Name = "BtnFirst";
+            BtnFirst.Size = new Size(80, 26);
+            BtnFirst.TabIndex = 6;
+            BtnFirst.Text = "First";
+            BtnFirst.UseVisualStyleBackColor = false;
+            BtnFirst.Click += BtnFirst_Click;
             // 
-            // btnPrevious
+            // BtnPrevious
             // 
-            btnPrevious.BackColor = Color.Black;
-            btnPrevious.BackgroundImage = (Image)resources.GetObject("btnPrevious.BackgroundImage");
-            btnPrevious.BackgroundImageLayout = ImageLayout.Stretch;
-            btnPrevious.FlatAppearance.BorderSize = 0;
-            btnPrevious.FlatStyle = FlatStyle.Flat;
-            btnPrevious.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPrevious.ForeColor = Color.FromArgb(47, 116, 193);
-            btnPrevious.Location = new Point(153, 402);
-            btnPrevious.Margin = new Padding(3, 2, 3, 2);
-            btnPrevious.Name = "btnPrevious";
-            btnPrevious.Size = new Size(80, 26);
-            btnPrevious.TabIndex = 7;
-            btnPrevious.Text = "Previous";
-            btnPrevious.UseVisualStyleBackColor = false;
+            BtnPrevious.BackColor = Color.Black;
+            BtnPrevious.BackgroundImage = (Image)resources.GetObject("BtnPrevious.BackgroundImage");
+            BtnPrevious.BackgroundImageLayout = ImageLayout.Stretch;
+            BtnPrevious.FlatAppearance.BorderSize = 0;
+            BtnPrevious.FlatStyle = FlatStyle.Flat;
+            BtnPrevious.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnPrevious.ForeColor = Color.FromArgb(47, 116, 193);
+            BtnPrevious.Location = new Point(153, 402);
+            BtnPrevious.Margin = new Padding(3, 2, 3, 2);
+            BtnPrevious.Name = "BtnPrevious";
+            BtnPrevious.Size = new Size(80, 26);
+            BtnPrevious.TabIndex = 7;
+            BtnPrevious.Text = "Previous";
+            BtnPrevious.UseVisualStyleBackColor = false;
+            BtnPrevious.Click += BtnPrevious_Click;
             // 
-            // btnNext
+            // BtnNext
             // 
-            btnNext.BackColor = Color.Black;
-            btnNext.BackgroundImage = (Image)resources.GetObject("btnNext.BackgroundImage");
-            btnNext.BackgroundImageLayout = ImageLayout.Stretch;
-            btnNext.FlatAppearance.BorderSize = 0;
-            btnNext.FlatStyle = FlatStyle.Flat;
-            btnNext.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNext.ForeColor = Color.FromArgb(47, 116, 193);
-            btnNext.Location = new Point(402, 402);
-            btnNext.Margin = new Padding(3, 2, 3, 2);
-            btnNext.Name = "btnNext";
-            btnNext.Size = new Size(80, 26);
-            btnNext.TabIndex = 8;
-            btnNext.Text = "Next";
-            btnNext.UseVisualStyleBackColor = false;
+            BtnNext.BackColor = Color.Black;
+            BtnNext.BackgroundImage = (Image)resources.GetObject("BtnNext.BackgroundImage");
+            BtnNext.BackgroundImageLayout = ImageLayout.Stretch;
+            BtnNext.FlatAppearance.BorderSize = 0;
+            BtnNext.FlatStyle = FlatStyle.Flat;
+            BtnNext.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnNext.ForeColor = Color.FromArgb(47, 116, 193);
+            BtnNext.Location = new Point(402, 402);
+            BtnNext.Margin = new Padding(3, 2, 3, 2);
+            BtnNext.Name = "BtnNext";
+            BtnNext.Size = new Size(80, 26);
+            BtnNext.TabIndex = 8;
+            BtnNext.Text = "Next";
+            BtnNext.UseVisualStyleBackColor = false;
+            BtnNext.Click += BtnNext_Click;
             // 
-            // btnLast
+            // BtnLast
             // 
-            btnLast.BackColor = Color.Black;
-            btnLast.BackgroundImage = (Image)resources.GetObject("btnLast.BackgroundImage");
-            btnLast.BackgroundImageLayout = ImageLayout.Stretch;
-            btnLast.FlatAppearance.BorderSize = 0;
-            btnLast.FlatStyle = FlatStyle.Flat;
-            btnLast.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLast.ForeColor = Color.FromArgb(47, 116, 193);
-            btnLast.Location = new Point(519, 402);
-            btnLast.Margin = new Padding(3, 2, 3, 2);
-            btnLast.Name = "btnLast";
-            btnLast.Size = new Size(80, 26);
-            btnLast.TabIndex = 9;
-            btnLast.Text = " Last";
-            btnLast.UseVisualStyleBackColor = false;
+            BtnLast.BackColor = Color.Black;
+            BtnLast.BackgroundImage = (Image)resources.GetObject("BtnLast.BackgroundImage");
+            BtnLast.BackgroundImageLayout = ImageLayout.Stretch;
+            BtnLast.FlatAppearance.BorderSize = 0;
+            BtnLast.FlatStyle = FlatStyle.Flat;
+            BtnLast.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnLast.ForeColor = Color.FromArgb(47, 116, 193);
+            BtnLast.Location = new Point(519, 402);
+            BtnLast.Margin = new Padding(3, 2, 3, 2);
+            BtnLast.Name = "BtnLast";
+            BtnLast.Size = new Size(80, 26);
+            BtnLast.TabIndex = 9;
+            BtnLast.Text = " Last";
+            BtnLast.UseVisualStyleBackColor = false;
+            BtnLast.Click += BtnLast_Click;
             // 
             // groupBox1
             // 
@@ -257,6 +261,13 @@
             groupBox1.Size = new Size(585, 432);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(28, 223);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(200, 23);
+            dateTimePicker1.TabIndex = 25;
             // 
             // cobMake
             // 
@@ -411,13 +422,6 @@
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
             // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Location = new Point(28, 223);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 25;
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -425,10 +429,10 @@
             BackColor = Color.White;
             ClientSize = new Size(635, 531);
             Controls.Add(label1);
-            Controls.Add(btnLast);
-            Controls.Add(btnNext);
-            Controls.Add(btnPrevious);
-            Controls.Add(btnFirst);
+            Controls.Add(BtnLast);
+            Controls.Add(BtnNext);
+            Controls.Add(BtnPrevious);
+            Controls.Add(BtnFirst);
             Controls.Add(btnExit);
             Controls.Add(btnDelete);
             Controls.Add(btnCancel);
@@ -454,10 +458,10 @@
         private Button btnCancel;
         private Button btnDelete;
         private Button btnExit;
-        private Button btnFirst;
-        private Button btnPrevious;
-        private Button btnNext;
-        private Button btnLast;
+        private Button BtnFirst;
+        private Button BtnPrevious;
+        private Button BtnNext;
+        private Button BtnLast;
         private GroupBox groupBox1;
         private CheckBox chkAvailable;
         private TextBox txtRentalPerDay;

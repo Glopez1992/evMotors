@@ -30,6 +30,7 @@ namespace WinFormsApp1
         {
             LoadData();
             MessageBox.Show("Connected to Database");
+            DisplayRecord();
         }
 
         private void LoadData()
@@ -55,16 +56,21 @@ namespace WinFormsApp1
 
         private void DisplayRecord()
         {
+
             txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
             cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
             txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize"].ToString();
             dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
             txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
+            chkAvailable.Checked = Convert.ToBoolean(dataTable.Rows[currentIndex]["Available"]);
 
-            btnPrevious.Enabled = currentIndex > 0;
-            btnFirst.Enabled = currentIndex > 0;
-            btnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
+
+            BtnPrevious.Enabled = currentIndex > 0;
+            BtnFirst.Enabled = currentIndex > 0;
+            BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
             this.Text = $"Current Table Index:  {currentIndex}";
+            int adjustedIndex = currentIndex + 1;
+            lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -78,7 +84,8 @@ namespace WinFormsApp1
                 DateTime dateRegistered = dateTimePicker1.Value;
                 decimal rentalPerDay = decimal.Parse(txtRentalPerDay.Text);
                 bool available = chkAvailable.Checked;
-
+                InputValidate(vehicleRegNo);
+                System.Console.WriteLine("output");
 
                 // create and open connection
                 using (connection = new SqlConnection(connectionString))
@@ -107,7 +114,6 @@ namespace WinFormsApp1
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
                 reader.Close();
                 connection.Close();
             }
@@ -163,7 +169,7 @@ namespace WinFormsApp1
             LoadData();
             DisplayRecord();
         }
-        
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -173,6 +179,39 @@ namespace WinFormsApp1
         private void btnCancel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void BtnLast_Click(object sender, EventArgs e)
+        {
+            currentIndex = dataTable.Rows.Count - 1;
+            DisplayRecord();
+        }
+
+        private void BtnNext_Click(object sender, EventArgs e)
+        {
+            currentIndex++;
+            DisplayRecord();
+        }
+
+        private void BtnPrevious_Click(object sender, EventArgs e)
+        {
+            currentIndex--;
+            DisplayRecord();
+        }
+
+        private void BtnFirst_Click(object sender, EventArgs e)
+        {
+            currentIndex = 0;
+            DisplayRecord();
+        }
+
+        private void InputValidate(string vehicleRegNo)
+        {
+            if (vehicleRegNo.Length > 10)
+            {
+                throw new ArgumentOutOfRangeException
+                    ("Please enter a valid Vehicle Registration Number (Less than 10 Characters");     
+            }
         }
     }
 }
