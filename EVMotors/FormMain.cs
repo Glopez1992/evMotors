@@ -53,6 +53,20 @@ namespace WinFormsApp1
             }
         }
 
+        private void DisplayRecord()
+        {
+            txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
+            cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
+            txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize"].ToString();
+            dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
+            txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
+
+            btnPrevious.Enabled = currentIndex > 0;
+            btnFirst.Enabled = currentIndex > 0;
+            btnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
+            this.Text = $"Current Table Index:  {currentIndex}";
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             dataChanged = true;
@@ -115,12 +129,12 @@ namespace WinFormsApp1
 
                 using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                 {
-                    updateCommand.Parameters.AddWithValue("@Make", txtMake.Text);
+                    updateCommand.Parameters.AddWithValue("@Make", cobMake.Text);
                     updateCommand.Parameters.AddWithValue("@EngineSize", txtEngineSize.Text);
                     updateCommand.Parameters.AddWithValue("@DateRegistered", dateTimePicker1.Value.Date);
                     try
                     {
-                        string rentalPerDayWithoutEuro = txt.RentalPerDay.Text.Replace("€", "").Trim();
+                        string rentalPerDayWithoutEuro = txtRentalPerDay.Text.Replace("€", "").Trim();
                         decimal sf = decimal.Parse(rentalPerDayWithoutEuro);
                         updateCommand.Parameters.AddWithValue("@RentalPerDay", sf);
                     }
@@ -129,7 +143,7 @@ namespace WinFormsApp1
                         MessageBox.Show(exception.Message);
                     }
 
-                    updateCommand.Parameters.AddWithValue("@Available", checkBoxAvailable.Checked);
+                    updateCommand.Parameters.AddWithValue("@Available", chkAvailable.Checked);
 
                     updateCommand.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
 
@@ -149,7 +163,7 @@ namespace WinFormsApp1
             LoadData();
             DisplayRecord();
         }
-        }
+        
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
