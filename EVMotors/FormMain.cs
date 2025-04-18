@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Data;
 using System.IO;
@@ -30,6 +31,7 @@ namespace WinFormsApp1
         {
             LoadData();
             MessageBox.Show("Connected to Database");
+            DisplayRecord();
         }
 
         private void LoadData()
@@ -55,16 +57,21 @@ namespace WinFormsApp1
 
         private void DisplayRecord()
         {
+
             txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
             cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
             txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize"].ToString();
             dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
             txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
+            chkAvailable.Checked = Convert.ToBoolean(dataTable.Rows[currentIndex]["Available"]);
 
-            btnPrevious.Enabled = currentIndex > 0;
-            btnFirst.Enabled = currentIndex > 0;
-            btnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
+
+            BtnPrevious.Enabled = currentIndex > 0;
+            BtnFirst.Enabled = currentIndex > 0;
+            BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
             this.Text = $"Current Table Index:  {currentIndex}";
+            int adjustedIndex = currentIndex + 1;
+            lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -73,12 +80,49 @@ namespace WinFormsApp1
             try
             {
                 string vehicleRegNo = txtVehicleRegNo.Text;
-                string make = cobMake.Text;
-                string engineSize = txtEngineSize.Text;
-                DateTime dateRegistered = dateTimePicker1.Value;
-                decimal rentalPerDay = decimal.Parse(txtRentalPerDay.Text);
-                bool available = chkAvailable.Checked;
+                if(string.IsNullOrWhiteSpace(vehicleRegNo))
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot be empty", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtVehicleRegNo.Clear();
+                    return;
+                }
+                if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtVehicleRegNo.Clear();
+                    return; // Stop execution if validation fails
+                }
 
+                string make = cobMake.Text;
+                if (string.IsNullOrWhiteSpace(make))
+                {
+                    MessageBox.Show("Make is a required field.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (make.Length > 50)
+                {
+                    MessageBox.Show("Make cannot exceed 50 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string engineSize = txtEngineSize.Text;
+               
+                DateTime dateRegistered;
+                if (!DateTime.TryParse(dateTimePicker1.Value.ToString(), out dateRegistered) || dateRegistered > DateTime.Now)
+                {
+                    MessageBox.Show("Date Registered must be a valid date and not in the future.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                decimal rentalPerDay;
+                if (!decimal.TryParse(txtRentalPerDay.Text, out rentalPerDay))
+                {
+                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                bool available = chkAvailable.Checked;
+                ;
+               
 
                 // create and open connection
                 using (connection = new SqlConnection(connectionString))
@@ -107,7 +151,6 @@ namespace WinFormsApp1
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
                 reader.Close();
                 connection.Close();
             }
@@ -163,7 +206,7 @@ namespace WinFormsApp1
             LoadData();
             DisplayRecord();
         }
-        
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -174,5 +217,38 @@ namespace WinFormsApp1
         {
 
         }
-    }
+
+        private void BtnLast_Click(object sender, EventArgs e)
+        {
+            currentIndex = dataTable.Rows.Count - 1;
+            DisplayRecord();
+        }
+
+        private void BtnNext_Click(object sender, EventArgs e)
+        {
+            currentIndex++;
+            DisplayRecord();
+        }
+
+        private void BtnPrevious_Click(object sender, EventArgs e)
+        {
+            currentIndex--;
+            DisplayRecord();
+        }
+
+        private void BtnFirst_Click(object sender, EventArgs e)
+        {
+            currentIndex = 0;
+            DisplayRecord();
+        }
+
+        private void InputValidate(string vehicleRegNo)
+        {
+             if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
+                {
+                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Stop execution if validation fails
+                }
+        }
+    } 
 }
