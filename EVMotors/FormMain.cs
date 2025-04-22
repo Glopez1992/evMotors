@@ -13,7 +13,7 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=KylePC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
