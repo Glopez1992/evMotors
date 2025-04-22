@@ -13,7 +13,7 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=KylePC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -69,7 +69,7 @@ namespace WinFormsApp1
             BtnPrevious.Enabled = currentIndex > 0;
             BtnFirst.Enabled = currentIndex > 0;
             BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
-            this.Text = $"Current Table Index:  {currentIndex}";
+            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}"; 
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
         }
@@ -244,11 +244,13 @@ namespace WinFormsApp1
 
         private void InputValidate(string vehicleRegNo)
         {
-             if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
+             if (vehicleRegNo.Length > 10) 
                 {
                     MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // Stop execution if validation fails
+                    return; 
                 }
         }
-    } 
+
+    }
 }
+
