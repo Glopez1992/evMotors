@@ -69,7 +69,7 @@ namespace WinFormsApp1
             BtnPrevious.Enabled = currentIndex > 0;
             BtnFirst.Enabled = currentIndex > 0;
             BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
-            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}"; 
+            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
         }
@@ -80,7 +80,7 @@ namespace WinFormsApp1
             try
             {
                 string vehicleRegNo = txtVehicleRegNo.Text;
-                if(string.IsNullOrWhiteSpace(vehicleRegNo))
+                if (string.IsNullOrWhiteSpace(vehicleRegNo))
                 {
                     MessageBox.Show("Vehicle Registration Number cannot be empty", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtVehicleRegNo.Clear();
@@ -106,7 +106,7 @@ namespace WinFormsApp1
                 }
 
                 string engineSize = txtEngineSize.Text;
-               
+
                 DateTime dateRegistered;
                 if (!DateTime.TryParse(dateTimePicker1.Value.ToString(), out dateRegistered) || dateRegistered > DateTime.Now)
                 {
@@ -121,11 +121,21 @@ namespace WinFormsApp1
                     return;
                 }
                 bool available = chkAvailable.Checked;
-                ;
-               
 
-                // create and open connection
-                using (connection = new SqlConnection(connectionString))
+                //Check if the vehicleRegNo already exists in the database
+
+                try
+                {
+                    ValidateUniqueVehicleRegNo(vehicleRegNo);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                    // create and open connection
+                    using (connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     // create and execute SQL Command with parameters
@@ -151,8 +161,7 @@ namespace WinFormsApp1
             }
             catch (Exception exception)
             {
-                reader.Close();
-                connection.Close();
+                MessageBox.Show("Error: " + exception.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -207,14 +216,12 @@ namespace WinFormsApp1
             DisplayRecord();
         }
 
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            LoadData();
+            currentIndex = dataTable.Rows.Count > 0 ? 0 : -1;
+            DisplayRecord();
+            dataChanged = false;
 
         }
 
@@ -244,13 +251,33 @@ namespace WinFormsApp1
 
         private void InputValidate(string vehicleRegNo)
         {
-             if (vehicleRegNo.Length > 10) 
-                {
-                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; 
-                }
+            if (vehicleRegNo.Length > 10)
+            {
+                MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
+        private void ValidateUniqueVehicleRegNo(String vehicleRegNo)
+        {
+            using (connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string checkQuery = "SELECT vehicleRegNo FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
+                {
+                    checkCmd.Parameters.AddWithValue("@vehicleRegNo", vehicleRegNo);
+                    var result = checkCmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        throw new Exception("A vehicle with this registration number already exists.");
+                    }
+                }
+            }
+
+
+        }
     }
 }
 
