@@ -13,7 +13,7 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -134,8 +134,8 @@ namespace WinFormsApp1
                     return;
                 }
 
-                    // create and open connection
-                    using (connection = new SqlConnection(connectionString))
+                // create and open connection
+                using (connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     // create and execute SQL Command with parameters
@@ -278,6 +278,21 @@ namespace WinFormsApp1
 
 
         }
+            private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to exit?",
+                "Exit Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                System.Windows.Forms.Application.Exit();
+            }
+        }
+
     }
 }
+
 
