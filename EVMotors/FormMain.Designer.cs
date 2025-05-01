@@ -44,7 +44,6 @@
             cobMake = new ComboBox();
             chkAvailable = new CheckBox();
             txtRentalPerDay = new TextBox();
-            txtDateRegistered = new TextBox();
             txtEngineSize = new TextBox();
             txtVehicleRegNo = new TextBox();
             lblRecordCount = new Label();
@@ -128,7 +127,6 @@
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
-
             // 
             // btnDelete
             // 
@@ -163,6 +161,7 @@
             btnExit.TabIndex = 5;
             btnExit.Text = "EXIT";
             btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += btnExit_Click;
             // 
             // BtnFirst
             // 
@@ -243,7 +242,6 @@
             groupBox1.Controls.Add(cobMake);
             groupBox1.Controls.Add(chkAvailable);
             groupBox1.Controls.Add(txtRentalPerDay);
-            groupBox1.Controls.Add(txtDateRegistered);
             groupBox1.Controls.Add(txtEngineSize);
             groupBox1.Controls.Add(txtVehicleRegNo);
             groupBox1.Controls.Add(lblRecordCount);
@@ -302,16 +300,6 @@
             txtRentalPerDay.Name = "txtRentalPerDay";
             txtRentalPerDay.Size = new Size(227, 29);
             txtRentalPerDay.TabIndex = 22;
-            // 
-            // txtDateRegistered
-            // 
-            txtDateRegistered.BackColor = Color.FromArgb(236, 240, 241);
-            txtDateRegistered.Font = new Font("Segoe UI", 12F);
-            txtDateRegistered.Location = new Point(6, 389);
-            txtDateRegistered.Margin = new Padding(3, 2, 3, 2);
-            txtDateRegistered.Name = "txtDateRegistered";
-            txtDateRegistered.Size = new Size(227, 29);
-            txtDateRegistered.TabIndex = 21;
             // 
             // txtEngineSize
             // 
@@ -465,7 +453,6 @@
         private GroupBox groupBox1;
         private CheckBox chkAvailable;
         private TextBox txtRentalPerDay;
-        private TextBox txtDateRegistered;
         private TextBox txtEngineSize;
         private TextBox txtVehicleRegNo;
         private Label lblRecordCount;
