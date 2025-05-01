@@ -134,8 +134,8 @@ namespace WinFormsApp1
                     return;
                 }
 
-                    // create and open connection
-                    using (connection = new SqlConnection(connectionString))
+                // create and open connection
+                using (connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     // create and execute SQL Command with parameters
@@ -277,6 +277,30 @@ namespace WinFormsApp1
             }
 
 
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            using (connection = new SqlConnection(connectionString))
+            {
+                connection.Open(); 
+                string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                {
+                    command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                    command.ExecuteNonQuery();
+                }
+            }
+            dataChanged = true;
+            LoadData();
+            if (currentIndex > 0)
+                currentIndex = 0;
+
+            if (currentIndex < dataTable.Rows.Count - 1)
+                currentIndex = dataTable.Rows.Count - 1;
+
+            DisplayRecord();
+            MessageBox.Show("User deleted successfully.");
         }
     }
 }

@@ -102,7 +102,7 @@
             txtPassword.PasswordChar = '*';
             txtPassword.PlaceholderText = "Password";
             txtPassword.Size = new Size(293, 36);
-            txtPassword.TabIndex = 25;
+            txtPassword.TabIndex = 22;
             txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // FormLogin
