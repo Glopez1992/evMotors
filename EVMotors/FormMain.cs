@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 
 namespace WinFormsApp1
@@ -18,7 +19,7 @@ namespace WinFormsApp1
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
         private bool dataChanged = true;
-
+        
         private int currentIndex = 0;
 
 
@@ -74,7 +75,9 @@ namespace WinFormsApp1
             this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
+            
             LoadCarMakes();
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -83,19 +86,6 @@ namespace WinFormsApp1
             try
             {
                 string vehicleRegNo = txtVehicleRegNo.Text;
-                if (string.IsNullOrWhiteSpace(vehicleRegNo))
-                {
-                    MessageBox.Show("Vehicle Registration Number cannot be empty", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtVehicleRegNo.Clear();
-                    return;
-                }
-                if (vehicleRegNo.Length > 10) // Assuming 10 is the SQL limit
-                {
-                    MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtVehicleRegNo.Clear();
-                    return; // Stop execution if validation fails
-                }
-
                 string make = cobMake.Text;
                 if (string.IsNullOrWhiteSpace(make))
                 {
@@ -129,11 +119,12 @@ namespace WinFormsApp1
 
                 try
                 {
-                    ValidateUniqueVehicleRegNo(vehicleRegNo);
+                    ValidateUniqueVehicleRegNo(txtVehicleRegNo.Text);
+                    ValidateEngineSize(txtEngineSize.Text);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -170,6 +161,16 @@ namespace WinFormsApp1
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            try
+            {
+                ValidateUniqueVehicleRegNo(txtEngineSize.Text);
+                ValidateEngineSize(txtEngineSize.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -222,7 +223,7 @@ namespace WinFormsApp1
         private void btnCancel_Click(object sender, EventArgs e)
         {
             LoadData();
-            currentIndex = dataTable.Rows.Count > 0 ? 0 : -1;
+            
             DisplayRecord();
             dataChanged = false;
 
@@ -252,18 +253,18 @@ namespace WinFormsApp1
             DisplayRecord();
         }
 
-        private void InputValidate(string vehicleRegNo)
-        {
-            if (vehicleRegNo.Length > 10)
-            {
-                MessageBox.Show("Vehicle Registration Number cannot exceed 10 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
         private void ValidateUniqueVehicleRegNo(String vehicleRegNo)
         {
-            using (connection = new SqlConnection(connectionString))
+            string vehicleRegNopattern = @"^\d{3}-[A-Z]{1,2}-\d{3}$";
+            string input = txtVehicleRegNo.Text.Trim();
+
+            if (!Regex.IsMatch(input, vehicleRegNopattern))
+            {
+                throw new FormatException("Vehicle Registration Number must follow the format 123-AB-456");
+            }
+               
+
+                using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -278,7 +279,16 @@ namespace WinFormsApp1
                     }
                 }
             }
+         
+        }
 
+        private void ValidateEngineSize(String engineSize)
+        {
+            string engineSizePattern = @"^(\d(.\d{1})?L|\d{2,4}kW)$";
+            if (!Regex.IsMatch(engineSize, engineSizePattern))
+                throw new FormatException("Invalid engine size format.\n\nPlease enter the engine size in one of the following formats:\n\n" +
+    "• Example 1: 1.0L (liters)\n" +
+    "• Example 2: 200kW (kilowatts)");
 
         }
 
@@ -287,7 +297,7 @@ namespace WinFormsApp1
         {
             if (!chkAvailable.Checked)
             {
-                MessageBox.Show("Cannot delete currently rented vehicle.");
+                MessageBox.Show("Cannot delete currently hired vehicle.");
             }
             else
             {
@@ -332,7 +342,7 @@ namespace WinFormsApp1
 
         private void LoadCarMakes()
         {
-
+            cobMake.Items.Clear();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
