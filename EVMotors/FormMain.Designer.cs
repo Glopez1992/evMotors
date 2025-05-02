@@ -278,6 +278,7 @@
             cobMake.Name = "cobMake";
             cobMake.Size = new Size(133, 29);
             cobMake.TabIndex = 24;
+            
             // 
             // chkAvailable
             // 
