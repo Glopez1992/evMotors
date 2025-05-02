@@ -111,7 +111,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(635, 531);
+            ClientSize = new Size(671, 764);
             Controls.Add(txtPassword);
             Controls.Add(lblSubtitle2);
             Controls.Add(btnLogin);

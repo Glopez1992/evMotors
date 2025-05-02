@@ -19,6 +19,8 @@ namespace MainFormEVMotors
         public FormLogin()
         {
             InitializeComponent();
+            
+            
         }
 
 
@@ -26,7 +28,9 @@ namespace MainFormEVMotors
 
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
+            this.AcceptButton = btnLogin;
+            this.ActiveControl = lblSubtitle1;
         }
 
         private void label2_Click(object sender, EventArgs e)

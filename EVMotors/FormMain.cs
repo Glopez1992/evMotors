@@ -32,6 +32,8 @@ namespace WinFormsApp1
             LoadData();
             MessageBox.Show("Connected to Database");
             DisplayRecord();
+            cobMake.DropDownHeight = 300;
+
         }
 
         private void LoadData()
@@ -72,6 +74,7 @@ namespace WinFormsApp1
             this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
+            LoadCarMakes();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -282,29 +285,38 @@ namespace WinFormsApp1
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            using (connection = new SqlConnection(connectionString))
+            if (!chkAvailable.Checked)
             {
-                connection.Open(); 
-                string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
-                using (SqlCommand command = new SqlCommand(deleteCommand, connection))
-                {
-                    command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
-                    command.ExecuteNonQuery();
-                }
+                MessageBox.Show("Cannot delete currently rented vehicle.");
             }
-            dataChanged = true;
-            LoadData();
-            if (currentIndex > 0)
-                currentIndex = 0;
+            else
+            {
+                using (connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                    using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                    {
+                        command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                dataChanged = true;
+                LoadData();
+                if (currentIndex > 0)
+                    currentIndex = 0;
 
-            if (currentIndex < dataTable.Rows.Count - 1)
-                currentIndex = dataTable.Rows.Count - 1;
+                if (currentIndex < dataTable.Rows.Count - 1)
+                    currentIndex = dataTable.Rows.Count - 1;
 
-            DisplayRecord();
-            MessageBox.Show("User deleted successfully.");
+                DisplayRecord();
+                MessageBox.Show("Record deleted successfully.");
+
+            }
+            
         }
 
-            private void btnExit_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to exit?",
@@ -318,6 +330,31 @@ namespace WinFormsApp1
             }
         }
 
+        private void LoadCarMakes()
+        {
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT DISTINCT Make FROM VehicleRegister";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            cobMake.Items.Add(reader.GetString(0));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading car makes: " + ex.Message);
+                }
+            }
+
+        }
     }
 }
 
