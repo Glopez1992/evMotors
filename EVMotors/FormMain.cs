@@ -186,7 +186,7 @@ namespace WinFormsApp1
                     updateCommand.Parameters.AddWithValue("@DateRegistered", dateTimePicker1.Value.Date);
                     try
                     {
-                        string rentalPerDayWithoutEuro = txtRentalPerDay.Text.Replace("€", "").Trim();
+                        string rentalPerDayWithoutEuro = txtRentalPerDay.Text.Replace("â‚¬", "").Trim();
                         decimal sf = decimal.Parse(rentalPerDayWithoutEuro);
                         updateCommand.Parameters.AddWithValue("@RentalPerDay", sf);
                     }
@@ -278,6 +278,32 @@ namespace WinFormsApp1
 
 
         }
+
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            using (connection = new SqlConnection(connectionString))
+            {
+                connection.Open(); 
+                string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                {
+                    command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                    command.ExecuteNonQuery();
+                }
+            }
+            dataChanged = true;
+            LoadData();
+            if (currentIndex > 0)
+                currentIndex = 0;
+
+            if (currentIndex < dataTable.Rows.Count - 1)
+                currentIndex = dataTable.Rows.Count - 1;
+
+            DisplayRecord();
+            MessageBox.Show("User deleted successfully.");
+        }
+
             private void btnExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
