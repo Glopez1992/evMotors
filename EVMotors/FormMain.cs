@@ -14,7 +14,7 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -348,13 +348,13 @@ namespace WinFormsApp1
                 try
                 {
                     conn.Open();
-                    string query = "SELECT DISTINCT Make FROM VehicleRegister";
+                    string query = "SELECT MakeName FROM CarMake";  
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            cobMake.Items.Add(reader.GetString(0));
+                            cobMake.Items.Add(reader.GetString(0)); 
                         }
                     }
                 }
@@ -363,10 +363,9 @@ namespace WinFormsApp1
                     MessageBox.Show("Error loading car makes: " + ex.Message);
                 }
             }
+}
 
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
+private void btnSearch_Click(object sender, EventArgs e)
         {
 
         }
