@@ -14,12 +14,12 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
         private bool dataChanged = true;
-        
+
         private int currentIndex = 0;
 
 
@@ -75,7 +75,7 @@ namespace WinFormsApp1
             this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
-            
+
             LoadCarMakes();
 
         }
@@ -223,7 +223,7 @@ namespace WinFormsApp1
         private void btnCancel_Click(object sender, EventArgs e)
         {
             LoadData();
-            
+
             DisplayRecord();
             dataChanged = false;
 
@@ -262,9 +262,9 @@ namespace WinFormsApp1
             {
                 throw new FormatException("Vehicle Registration Number must follow the format 123-AB-456");
             }
-               
 
-                using (connection = new SqlConnection(connectionString))
+
+            using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -279,7 +279,7 @@ namespace WinFormsApp1
                     }
                 }
             }
-         
+
         }
 
         private void ValidateEngineSize(String engineSize)
@@ -323,7 +323,7 @@ namespace WinFormsApp1
                 MessageBox.Show("Record deleted successfully.");
 
             }
-            
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -348,13 +348,13 @@ namespace WinFormsApp1
                 try
                 {
                     conn.Open();
-                    string query = "SELECT DISTINCT Make FROM VehicleRegister";
+                    string query = "SELECT MakeName FROM CarMake";  
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            cobMake.Items.Add(reader.GetString(0));
+                            cobMake.Items.Add(reader.GetString(0)); 
                         }
                     }
                 }
@@ -363,6 +363,10 @@ namespace WinFormsApp1
                     MessageBox.Show("Error loading car makes: " + ex.Message);
                 }
             }
+}
+
+private void btnSearch_Click(object sender, EventArgs e)
+        {
 
         }
     }

@@ -54,6 +54,7 @@
             lblEngineSize = new Label();
             lblVehicleRegNumber = new Label();
             label1 = new Label();
+            sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -109,6 +110,7 @@
             btnSearch.TabIndex = 2;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
             // 
             // btnCancel
             // 
@@ -173,7 +175,7 @@
             BtnFirst.FlatStyle = FlatStyle.Flat;
             BtnFirst.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnFirst.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnFirst.Location = new Point(53, 402);
+            BtnFirst.Location = new Point(28, 331);
             BtnFirst.Margin = new Padding(3, 2, 3, 2);
             BtnFirst.Name = "BtnFirst";
             BtnFirst.Size = new Size(80, 26);
@@ -191,7 +193,7 @@
             BtnPrevious.FlatStyle = FlatStyle.Flat;
             BtnPrevious.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnPrevious.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnPrevious.Location = new Point(153, 402);
+            BtnPrevious.Location = new Point(128, 332);
             BtnPrevious.Margin = new Padding(3, 2, 3, 2);
             BtnPrevious.Name = "BtnPrevious";
             BtnPrevious.Size = new Size(80, 26);
@@ -227,7 +229,7 @@
             BtnLast.FlatStyle = FlatStyle.Flat;
             BtnLast.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnLast.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnLast.Location = new Point(519, 402);
+            BtnLast.Location = new Point(477, 330);
             BtnLast.Margin = new Padding(3, 2, 3, 2);
             BtnLast.Name = "BtnLast";
             BtnLast.Size = new Size(80, 26);
@@ -240,7 +242,10 @@
             // 
             groupBox1.BackColor = SystemColors.Window;
             groupBox1.Controls.Add(dateTimePicker1);
+            groupBox1.Controls.Add(BtnLast);
+            groupBox1.Controls.Add(BtnPrevious);
             groupBox1.Controls.Add(cobMake);
+            groupBox1.Controls.Add(BtnFirst);
             groupBox1.Controls.Add(chkAvailable);
             groupBox1.Controls.Add(txtRentalPerDay);
             groupBox1.Controls.Add(txtEngineSize);
@@ -278,7 +283,6 @@
             cobMake.Name = "cobMake";
             cobMake.Size = new Size(133, 29);
             cobMake.TabIndex = 24;
-            
             // 
             // chkAvailable
             // 
@@ -296,31 +300,34 @@
             // txtRentalPerDay
             // 
             txtRentalPerDay.BackColor = Color.FromArgb(236, 240, 241);
+            txtRentalPerDay.BorderStyle = BorderStyle.None;
             txtRentalPerDay.Font = new Font("Segoe UI", 12F);
             txtRentalPerDay.Location = new Point(28, 273);
             txtRentalPerDay.Margin = new Padding(3, 2, 3, 2);
             txtRentalPerDay.Name = "txtRentalPerDay";
-            txtRentalPerDay.Size = new Size(227, 29);
+            txtRentalPerDay.Size = new Size(227, 22);
             txtRentalPerDay.TabIndex = 22;
             // 
             // txtEngineSize
             // 
             txtEngineSize.BackColor = Color.FromArgb(236, 240, 241);
+            txtEngineSize.BorderStyle = BorderStyle.None;
             txtEngineSize.Font = new Font("Segoe UI", 12F);
             txtEngineSize.Location = new Point(28, 168);
             txtEngineSize.Margin = new Padding(3, 2, 3, 2);
             txtEngineSize.Name = "txtEngineSize";
-            txtEngineSize.Size = new Size(227, 29);
+            txtEngineSize.Size = new Size(227, 22);
             txtEngineSize.TabIndex = 20;
             // 
             // txtVehicleRegNo
             // 
             txtVehicleRegNo.BackColor = Color.FromArgb(236, 240, 241);
+            txtVehicleRegNo.BorderStyle = BorderStyle.None;
             txtVehicleRegNo.Font = new Font("Segoe UI", 12F);
             txtVehicleRegNo.Location = new Point(28, 115);
             txtVehicleRegNo.Margin = new Padding(3, 2, 3, 2);
             txtVehicleRegNo.Name = "txtVehicleRegNo";
-            txtVehicleRegNo.Size = new Size(270, 29);
+            txtVehicleRegNo.Size = new Size(270, 22);
             txtVehicleRegNo.TabIndex = 19;
             // 
             // lblRecordCount
@@ -386,9 +393,9 @@
             lblEngineSize.ForeColor = Color.FromArgb(29, 48, 88);
             lblEngineSize.Location = new Point(28, 144);
             lblEngineSize.Name = "lblEngineSize";
-            lblEngineSize.Size = new Size(92, 21);
+            lblEngineSize.Size = new Size(144, 21);
             lblEngineSize.TabIndex = 13;
-            lblEngineSize.Text = "Engine Size";
+            lblEngineSize.Text = "Engine Size/Power";
             // 
             // lblVehicleRegNumber
             // 
@@ -412,17 +419,19 @@
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
             // 
+            // sqlCommand1
+            // 
+            sqlCommand1.CommandTimeout = 30;
+            sqlCommand1.EnableOptimizedParameterBinding = false;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(635, 531);
+            ClientSize = new Size(640, 535);
             Controls.Add(label1);
-            Controls.Add(BtnLast);
             Controls.Add(BtnNext);
-            Controls.Add(BtnPrevious);
-            Controls.Add(BtnFirst);
             Controls.Add(btnExit);
             Controls.Add(btnDelete);
             Controls.Add(btnCancel);
@@ -467,5 +476,6 @@
         private Label label1;
         private ComboBox cobMake;
         private DateTimePicker dateTimePicker1;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
     }
 }
