@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
+using FormEVMotors;
 
 
 namespace WinFormsApp1
@@ -301,26 +302,36 @@ namespace WinFormsApp1
             }
             else
             {
-                using (connection = new SqlConnection(connectionString))
+                DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this vehicle?",
+                "Delete Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    connection.Open();
-                    string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
-                    using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                    using (connection = new SqlConnection(connectionString))
                     {
-                        command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
-                        command.ExecuteNonQuery();
+                        connection.Open();
+                        string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                        using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                        {
+                            command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                            command.ExecuteNonQuery();
+                        }
                     }
+                    dataChanged = true;
+                    LoadData();
+                    if (currentIndex > 0)
+                        currentIndex = 0;
+
+                    if (currentIndex < dataTable.Rows.Count - 1)
+                        currentIndex = dataTable.Rows.Count - 1;
+
+                    DisplayRecord();
+                    MessageBox.Show("Vehicle deleted successfully.");
                 }
-                dataChanged = true;
-                LoadData();
-                if (currentIndex > 0)
-                    currentIndex = 0;
-
-                if (currentIndex < dataTable.Rows.Count - 1)
-                    currentIndex = dataTable.Rows.Count - 1;
-
-                DisplayRecord();
-                MessageBox.Show("Record deleted successfully.");
+                
 
             }
 
@@ -368,7 +379,8 @@ namespace WinFormsApp1
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            FormSearch searchForm = new FormSearch();
+            searchForm.ShowDialog();
         }
     }
 }
