@@ -269,9 +269,11 @@
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(28, 223);
+            dateTimePicker1.MaxDate = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 25;
+            dateTimePicker1.Value = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             // 
             // cobMake
             // 
