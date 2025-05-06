@@ -15,7 +15,7 @@ namespace WinFormsApp1
     public partial class FormMain : Form
     {
 
-        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -134,14 +134,14 @@ namespace WinFormsApp1
                 {
                     connection.Open();
                     // create and execute SQL Command with parameters
-                    string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize, DateRegistered, RentalPerDay, Available)"
-                        + "VALUES (@VehicleRegNo,@Make, @EngineSize,@DateRegistered, @RentalPerDay, @Available)";
+                    string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize/Power, DateRegistered, RentalPerDay, Available)"
+                        + "VALUES (@VehicleRegNo,@Make, @EngineSize/Power,@DateRegistered, @RentalPerDay, @Available)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         //use parameters to add data
                         command.Parameters.AddWithValue("@VehicleRegNo", vehicleRegNo);
                         command.Parameters.AddWithValue("@Make", make);
-                        command.Parameters.AddWithValue("@EngineSize", engineSize);
+                        command.Parameters.AddWithValue("@EngineSize/Power", engineSize);
                         command.Parameters.AddWithValue("@DateRegistered", dateRegistered);
                         command.Parameters.AddWithValue("@RentalPerDay", rentalPerDay);
                         command.Parameters.AddWithValue("@Available", available);
@@ -178,7 +178,7 @@ namespace WinFormsApp1
                 string updateQuery = @"
                     UPDATE VehicleRegister
                     SET Make = @Make,
-                        EngineSize = @EngineSize,
+                        EngineSize = @EngineSize/Power,
                         DateRegistered = @DateRegistered,
                         RentalPerDay = @RentalPerDay,
                         Available = @Available
@@ -187,7 +187,7 @@ namespace WinFormsApp1
                 using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                 {
                     updateCommand.Parameters.AddWithValue("@Make", cobMake.Text);
-                    updateCommand.Parameters.AddWithValue("@EngineSize", txtEngineSize.Text);
+                    updateCommand.Parameters.AddWithValue("@EngineSize/Power", txtEngineSize.Text);
                     updateCommand.Parameters.AddWithValue("@DateRegistered", dateTimePicker1.Value.Date);
                     try
                     {
