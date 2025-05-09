@@ -117,6 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnSearchExit.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAG4AAAApCAYAAADUBhwvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAH1JREFUeF7t0TERACAQwLD37w4ZOGCDHQe565Cla2ftc+OZP8TQOFTjUI1DNQ7V
+        OFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1D
+        NQ7VOFTjUI1DNQ7VOFTjUI1DPSykDA4TYNzXAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnClear.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAG4AAAApCAYAAADUBhwvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAH1JREFUeF7t0TERACAQwLD37w4ZOGCDHQe565Cla2ftc+OZP8TQOFTjUI1DNQ7V
+        OFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1D
+        NQ7VOFTjUI1DNQ7VOFTjUI1DPSykDA4TYNzXAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnSearchForm.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAG4AAAApCAYAAADUBhwvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAH1JREFUeF7t0TERACAQwLD37w4ZOGCDHQe565Cla2ftc+OZP8TQOFTjUI1DNQ7V
+        OFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1D
+        NQ7VOFTjUI1DNQ7VOFTjUI1DPSykDA4TYNzXAAAAAElFTkSuQmCC
+</value>
+  </data>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -135,21 +160,4 @@
   <metadata name="Column6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnSearchForm.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAG4AAAApCAYAAADUBhwvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAH1JREFUeF7t0TERACAQwLD37w4ZOGCDHQe565Cla2ftc+OZP8TQOFTjUI1DNQ7V
-        OFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1D
-        NQ7VOFTjUI1DNQ7VOFTjUI1DPSykDA4TYNzXAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnClear.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAG4AAAApCAYAAADUBhwvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAH1JREFUeF7t0TERACAQwLD37w4ZOGCDHQe565Cla2ftc+OZP8TQOFTjUI1DNQ7V
-        OFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1DNQ7VOFTjUI1D
-        NQ7VOFTjUI1DNQ7VOFTjUI1DPSykDA4TYNzXAAAAAElFTkSuQmCC
-</value>
-  </data>
 </root>

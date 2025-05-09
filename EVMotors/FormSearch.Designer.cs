@@ -35,8 +35,12 @@
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             groupBox2 = new GroupBox();
-            lblSearch = new Label();
-            comboBoxField = new ComboBox();
+            comboBoxOperator = new ComboBox();
+            lblValue = new Label();
+            lblOperator = new Label();
+            lblField = new Label();
+            btnClear = new Button();
+            btnSearchForm = new Button();
             dataGridView = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
@@ -44,13 +48,10 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
-            btnSearchForm = new Button();
-            btnClear = new Button();
-            lblField = new Label();
-            lblOperator = new Label();
-            lblValue = new Label();
-            comboBoxOperator = new ComboBox();
-            comboBoxValue = new ComboBox();
+            comboBoxField = new ComboBox();
+            lblSearch = new Label();
+            btnSearchExit = new Button();
+            txtValue = new TextBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -58,7 +59,8 @@
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(comboBoxValue);
+            groupBox2.Controls.Add(txtValue);
+            groupBox2.Controls.Add(btnSearchExit);
             groupBox2.Controls.Add(comboBoxOperator);
             groupBox2.Controls.Add(lblValue);
             groupBox2.Controls.Add(lblOperator);
@@ -77,32 +79,92 @@
             groupBox2.TabStop = false;
             groupBox2.Enter += groupBox1_Enter;
             // 
-            // lblSearch
+            // comboBoxOperator
             // 
-            lblSearch.AutoSize = true;
-            lblSearch.Font = new Font("Segoe UI Variable Text", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSearch.ForeColor = Color.FromArgb(29, 48, 88);
-            lblSearch.Location = new Point(227, 38);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(233, 36);
-            lblSearch.TabIndex = 12;
-            lblSearch.Text = "Search EVMotors";
-            lblSearch.Click += label1_Click;
+            comboBoxOperator.BackColor = Color.FromArgb(236, 240, 241);
+            comboBoxOperator.FormattingEnabled = true;
+            comboBoxOperator.Location = new Point(259, 70);
+            comboBoxOperator.Name = "comboBoxOperator";
+            comboBoxOperator.Size = new Size(145, 23);
+            comboBoxOperator.TabIndex = 20;
             // 
-            // comboBoxField
+            // lblValue
             // 
-            comboBoxField.BackColor = Color.FromArgb(236, 240, 241);
-            comboBoxField.FormattingEnabled = true;
-            comboBoxField.Location = new Point(58, 73);
-            comboBoxField.Name = "comboBoxField";
-            comboBoxField.Size = new Size(145, 23);
-            comboBoxField.TabIndex = 0;
-            comboBoxField.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            lblValue.AutoSize = true;
+            lblValue.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblValue.ForeColor = Color.FromArgb(29, 48, 88);
+            lblValue.Location = new Point(465, 42);
+            lblValue.Name = "lblValue";
+            lblValue.Size = new Size(59, 25);
+            lblValue.TabIndex = 19;
+            lblValue.Text = "Value";
+            lblValue.Click += label3_Click;
+            // 
+            // lblOperator
+            // 
+            lblOperator.AutoSize = true;
+            lblOperator.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblOperator.ForeColor = Color.FromArgb(29, 48, 88);
+            lblOperator.Location = new Point(259, 42);
+            lblOperator.Name = "lblOperator";
+            lblOperator.Size = new Size(89, 25);
+            lblOperator.TabIndex = 18;
+            lblOperator.Text = "Operator";
+            lblOperator.Click += label2_Click;
+            // 
+            // lblField
+            // 
+            lblField.AutoSize = true;
+            lblField.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblField.ForeColor = Color.FromArgb(29, 48, 88);
+            lblField.Location = new Point(58, 42);
+            lblField.Name = "lblField";
+            lblField.Size = new Size(53, 25);
+            lblField.TabIndex = 17;
+            lblField.Text = "Field";
+            lblField.Click += lblMake_Click;
+            // 
+            // btnClear
+            // 
+            btnClear.BackColor = Color.Black;
+            btnClear.BackgroundImage = (Image)resources.GetObject("btnClear.BackgroundImage");
+            btnClear.BackgroundImageLayout = ImageLayout.Stretch;
+            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.ForeColor = Color.FromArgb(47, 116, 193);
+            btnClear.Location = new Point(389, 111);
+            btnClear.Margin = new Padding(3, 2, 3, 2);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(96, 31);
+            btnClear.TabIndex = 11;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            // 
+            // btnSearchForm
+            // 
+            btnSearchForm.BackColor = Color.Black;
+            btnSearchForm.BackgroundImage = (Image)resources.GetObject("btnSearchForm.BackgroundImage");
+            btnSearchForm.BackgroundImageLayout = ImageLayout.Stretch;
+            btnSearchForm.FlatAppearance.BorderSize = 0;
+            btnSearchForm.FlatStyle = FlatStyle.Flat;
+            btnSearchForm.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearchForm.ForeColor = Color.FromArgb(47, 116, 193);
+            btnSearchForm.Location = new Point(184, 111);
+            btnSearchForm.Margin = new Padding(3, 2, 3, 2);
+            btnSearchForm.Name = "btnSearchForm";
+            btnSearchForm.Size = new Size(96, 31);
+            btnSearchForm.TabIndex = 10;
+            btnSearchForm.Text = "Search";
+            btnSearchForm.UseVisualStyleBackColor = false;
+            btnSearchForm.Click += btnExit_Click;
             // 
             // dataGridView
             // 
+            dataGridView.AllowUserToAddRows = false;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.TopCenter;
             dataGridViewCellStyle6.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle6.ForeColor = Color.Gray;
             dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -119,14 +181,14 @@
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = Color.FromArgb(209, 233, 248);
             dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ActiveCaption;
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlDarkDark;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
             dataGridView.DefaultCellStyle = dataGridViewCellStyle8;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = SystemColors.InactiveCaption;
-            dataGridView.Location = new Point(18, 230);
+            dataGridView.Location = new Point(14, 191);
             dataGridView.Name = "dataGridView";
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.FromArgb(236, 240, 241);
@@ -138,7 +200,7 @@
             dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            dataGridView.Size = new Size(643, 294);
+            dataGridView.Size = new Size(649, 294);
             dataGridView.TabIndex = 9;
             // 
             // Column1
@@ -173,94 +235,56 @@
             Column6.HeaderText = "Available";
             Column6.Name = "Column6";
             // 
-            // btnSearchForm
+            // comboBoxField
             // 
-            btnSearchForm.BackColor = Color.Black;
-            btnSearchForm.BackgroundImage = (Image)resources.GetObject("btnSearchForm.BackgroundImage");
-            btnSearchForm.BackgroundImageLayout = ImageLayout.Stretch;
-            btnSearchForm.FlatAppearance.BorderSize = 0;
-            btnSearchForm.FlatStyle = FlatStyle.Flat;
-            btnSearchForm.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearchForm.ForeColor = Color.FromArgb(29, 48, 88);
-            btnSearchForm.Location = new Point(192, 124);
-            btnSearchForm.Margin = new Padding(3, 2, 3, 2);
-            btnSearchForm.Name = "btnSearchForm";
-            btnSearchForm.Size = new Size(96, 31);
-            btnSearchForm.TabIndex = 10;
-            btnSearchForm.Text = "Search";
-            btnSearchForm.UseVisualStyleBackColor = false;
-            btnSearchForm.Click += btnExit_Click;
+            comboBoxField.BackColor = Color.FromArgb(236, 240, 241);
+            comboBoxField.FormattingEnabled = true;
+            comboBoxField.Location = new Point(58, 73);
+            comboBoxField.Name = "comboBoxField";
+            comboBoxField.Size = new Size(145, 23);
+            comboBoxField.TabIndex = 0;
+            comboBoxField.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
-            // btnClear
+            // lblSearch
             // 
-            btnClear.BackColor = Color.Black;
-            btnClear.BackgroundImage = (Image)resources.GetObject("btnClear.BackgroundImage");
-            btnClear.BackgroundImageLayout = ImageLayout.Stretch;
-            btnClear.FlatAppearance.BorderSize = 0;
-            btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnClear.ForeColor = Color.FromArgb(29, 48, 88);
-            btnClear.Location = new Point(329, 124);
-            btnClear.Margin = new Padding(3, 2, 3, 2);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(96, 31);
-            btnClear.TabIndex = 11;
-            btnClear.Text = "Clear";
-            btnClear.UseVisualStyleBackColor = false;
+            lblSearch.AutoSize = true;
+            lblSearch.Font = new Font("Segoe UI Variable Text", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearch.ForeColor = Color.FromArgb(29, 48, 88);
+            lblSearch.Location = new Point(227, 38);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(233, 36);
+            lblSearch.TabIndex = 12;
+            lblSearch.Text = "Search EVMotors";
+            lblSearch.Click += label1_Click;
             // 
-            // lblField
+            // btnSearchExit
             // 
-            lblField.AutoSize = true;
-            lblField.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lblField.ForeColor = Color.FromArgb(29, 48, 88);
-            lblField.Location = new Point(58, 42);
-            lblField.Name = "lblField";
-            lblField.Size = new Size(53, 25);
-            lblField.TabIndex = 17;
-            lblField.Text = "Field";
-            lblField.Click += lblMake_Click;
+            btnSearchExit.BackColor = Color.Black;
+            btnSearchExit.BackgroundImage = (Image)resources.GetObject("btnSearchExit.BackgroundImage");
+            btnSearchExit.BackgroundImageLayout = ImageLayout.Stretch;
+            btnSearchExit.FlatAppearance.BorderSize = 0;
+            btnSearchExit.FlatStyle = FlatStyle.Flat;
+            btnSearchExit.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearchExit.ForeColor = Color.FromArgb(29, 48, 88);
+            btnSearchExit.Location = new Point(279, 507);
+            btnSearchExit.Margin = new Padding(3, 2, 3, 2);
+            btnSearchExit.Name = "btnSearchExit";
+            btnSearchExit.Size = new Size(96, 31);
+            btnSearchExit.TabIndex = 22;
+            btnSearchExit.Text = "EXIT";
+            btnSearchExit.UseVisualStyleBackColor = false;
             // 
-            // lblOperator
+            // txtValue
             // 
-            lblOperator.AutoSize = true;
-            lblOperator.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lblOperator.ForeColor = Color.FromArgb(29, 48, 88);
-            lblOperator.Location = new Point(259, 42);
-            lblOperator.Name = "lblOperator";
-            lblOperator.Size = new Size(89, 25);
-            lblOperator.TabIndex = 18;
-            lblOperator.Text = "Operator";
-            lblOperator.Click += label2_Click;
-            // 
-            // lblValue
-            // 
-            lblValue.AutoSize = true;
-            lblValue.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
-            lblValue.ForeColor = Color.FromArgb(29, 48, 88);
-            lblValue.Location = new Point(465, 42);
-            lblValue.Name = "lblValue";
-            lblValue.Size = new Size(59, 25);
-            lblValue.TabIndex = 19;
-            lblValue.Text = "Value";
-            lblValue.Click += label3_Click;
-            // 
-            // comboBoxOperator
-            // 
-            comboBoxOperator.BackColor = Color.FromArgb(236, 240, 241);
-            comboBoxOperator.FormattingEnabled = true;
-            comboBoxOperator.Location = new Point(259, 70);
-            comboBoxOperator.Name = "comboBoxOperator";
-            comboBoxOperator.Size = new Size(145, 23);
-            comboBoxOperator.TabIndex = 20;
-            // 
-            // comboBoxValue
-            // 
-            comboBoxValue.BackColor = Color.FromArgb(236, 240, 241);
-            comboBoxValue.FormattingEnabled = true;
-            comboBoxValue.Location = new Point(465, 70);
-            comboBoxValue.Name = "comboBoxValue";
-            comboBoxValue.Size = new Size(145, 23);
-            comboBoxValue.TabIndex = 21;
+            txtValue.BackColor = Color.FromArgb(236, 240, 241);
+            txtValue.BorderStyle = BorderStyle.None;
+            txtValue.Font = new Font("Segoe UI", 12F);
+            txtValue.Location = new Point(465, 71);
+            txtValue.Margin = new Padding(3, 2, 3, 2);
+            txtValue.Name = "txtValue";
+            txtValue.Size = new Size(139, 22);
+            txtValue.TabIndex = 24;
+            txtValue.TextChanged += txtValue_TextChanged;
             // 
             // FormSearch
             // 
@@ -298,7 +322,8 @@
         private Label lblValue;
         private Label lblOperator;
         private Label lblField;
-        private ComboBox comboBoxValue;
         private ComboBox comboBoxOperator;
+        private Button btnSearchExit;
+        private TextBox txtValue;
     }
 }

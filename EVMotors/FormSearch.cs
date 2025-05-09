@@ -66,5 +66,15 @@ namespace FormEVMotors
         {
 
         }
+
+        private void txtVehicleRegNo_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
