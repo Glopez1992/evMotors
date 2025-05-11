@@ -60,7 +60,7 @@ namespace FormEVMotors
             comboBoxField = new ComboBox();
             lblSearch = new Label();
             btnSearchExit = new Button();
-            txtValue = new TextBox();
+            comboBoxValue = new ComboBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -70,6 +70,7 @@ namespace FormEVMotors
             groupBox2.BackColor = Color.White;
             groupBox2.Controls.Add(btnSearchExit);
             groupBox2.Controls.Add(comboBoxOperator);
+            groupBox2.Controls.Add(comboBoxValue);
             groupBox2.Controls.Add(lblOperator);
             groupBox2.Controls.Add(lblField);
             groupBox2.Controls.Add(btnClear);
@@ -271,17 +272,17 @@ namespace FormEVMotors
             btnSearchExit.Text = "EXIT";
             btnSearchExit.UseVisualStyleBackColor = false;
             btnClear.FlatStyle = FlatStyle.Flat;
-            // txtValue
+
+            // comboBoxValue
             btnClear.ForeColor = Color.FromArgb(29, 48, 88);
-            txtValue.BackColor = Color.FromArgb(236, 240, 241);
-            txtValue.BorderStyle = BorderStyle.None;
-            txtValue.Font = new Font("Segoe UI", 12F);
-            txtValue.Location = new Point(465, 71);
-            txtValue.Margin = new Padding(3, 2, 3, 2);
-            txtValue.Name = "txtValue";
-            txtValue.Size = new Size(139, 22);
-            txtValue.TabIndex = 24;
-            txtValue.TextChanged += txtValue_TextChanged;
+            comboBoxValue.BackColor = Color.FromArgb(236, 240, 241);
+            comboBoxValue.Font = new Font("Segoe UI", 12F);
+            comboBoxValue.Location = new Point(465, 71);
+            comboBoxValue.Margin = new Padding(3, 2, 3, 2);
+            comboBoxValue.Name = "comboBoxValue";
+            comboBoxValue.Size = new Size(139, 22);
+            comboBoxValue.TabIndex = 24;
+            comboBoxValue.TextChanged += txtValue_TextChanged;
             btnClear.UseVisualStyleBackColor = false;
             // 
             // lblField
@@ -354,7 +355,7 @@ namespace FormEVMotors
         private Label lblSearch;
         private ComboBox comboBoxField;
         private ComboBox comboBoxOperator;
-        private TextBox txtValue;
+        private ComboBox comboBoxValue;
         private DataGridView dataGridView;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -363,9 +364,7 @@ namespace FormEVMotors
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column7;
-        private DataGridViewTextBoxColumn Column8;
-        private DataGridViewTextBoxColumn Column9;
-        private DataGridViewTextBoxColumn Column10;
+   
         private Button btnSearchForm;
         private Button btnClear;
         private Label lblValue;

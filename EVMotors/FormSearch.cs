@@ -20,7 +20,7 @@ namespace FormEVMotors
     public partial class FormSearch : Form
     {
         string[] operatorsArray = { "=", ">", "<", "<=", ">=" };
-        string[] fields = { "VehicleRegNo", "Make", "EngineSize", "DateRegistered",
+        string[] fields = { "VehicleRegNo", "Make", "EngineSize_Power", "DateRegistered",
                 "RentalPerDay", "Available" };
 
         private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
@@ -56,7 +56,8 @@ namespace FormEVMotors
         {
             var selectedOperator = comboBoxOperator.Text;
             var selectedField = comboBoxField.Text;
-            var selectedValue = txtValue.Text;
+            var selectedValue = comboBoxValue.Text;
+
             if (selectedOperator == "" || selectedField == "" || selectedValue == "")
             {
                 MessageBox.Show("Inputs cannot be empty.");
@@ -112,7 +113,7 @@ namespace FormEVMotors
                 else if (selectedField == "RentalPerDay")
                 {
                     decimal rentalPerDay;
-                    if (!decimal.TryParse(txtValue.Text, out rentalPerDay))
+                    if (!decimal.TryParse(comboBoxValue.Text, out rentalPerDay))
                     {
                         MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;

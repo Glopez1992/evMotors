@@ -53,7 +53,7 @@ namespace MainFormEVMotors
             string user = txtLogin.Text.Trim(); // Trim whitespace for better accuracy
             string password = txtPassword.Text;
 
-            string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotorsDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -66,7 +66,7 @@ namespace MainFormEVMotors
                 {
                     connection.Open();
 
-                    string checkQuery = "SELECT * FROM users WHERE [user] = @user AND [password] = @password";
+                    string checkQuery = "SELECT * FROM users WHERE [username] = @user AND [password] = @password";
 
                     using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
                     {
