@@ -1,4 +1,7 @@
-﻿namespace FormEVMotors
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace FormEVMotors
 {
     partial class FormSearch
     {
@@ -28,12 +31,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
+
             groupBox2 = new GroupBox();
             comboBoxOperator = new ComboBox();
             lblValue = new Label();
@@ -51,7 +60,7 @@
             comboBoxField = new ComboBox();
             lblSearch = new Label();
             btnSearchExit = new Button();
-            txtValue = new TextBox();
+            comboBoxValue = new ComboBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -59,10 +68,9 @@
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(txtValue);
             groupBox2.Controls.Add(btnSearchExit);
             groupBox2.Controls.Add(comboBoxOperator);
-            groupBox2.Controls.Add(lblValue);
+            groupBox2.Controls.Add(comboBoxValue);
             groupBox2.Controls.Add(lblOperator);
             groupBox2.Controls.Add(lblField);
             groupBox2.Controls.Add(btnClear);
@@ -76,20 +84,17 @@
             groupBox2.Padding = new Padding(3, 2, 3, 2);
             groupBox2.Size = new Size(680, 560);
             groupBox2.TabIndex = 11;
-            groupBox2.TabStop = false;
-            groupBox2.Enter += groupBox1_Enter;
-            // 
+
             // comboBoxOperator
-            // 
             comboBoxOperator.BackColor = Color.FromArgb(236, 240, 241);
             comboBoxOperator.FormattingEnabled = true;
             comboBoxOperator.Location = new Point(259, 70);
             comboBoxOperator.Name = "comboBoxOperator";
             comboBoxOperator.Size = new Size(145, 23);
             comboBoxOperator.TabIndex = 20;
-            // 
+            //
             // lblValue
-            // 
+            //
             lblValue.AutoSize = true;
             lblValue.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             lblValue.ForeColor = Color.FromArgb(29, 48, 88);
@@ -99,7 +104,7 @@
             lblValue.TabIndex = 19;
             lblValue.Text = "Value";
             lblValue.Click += label3_Click;
-            // 
+            //
             // lblOperator
             // 
             lblOperator.AutoSize = true;
@@ -157,8 +162,7 @@
             btnSearchForm.TabIndex = 10;
             btnSearchForm.Text = "Search";
             btnSearchForm.UseVisualStyleBackColor = false;
-            btnSearchForm.Click += btnExit_Click;
-            // 
+             // 
             // dataGridView
             // 
             dataGridView.AllowUserToAddRows = false;
@@ -229,12 +233,6 @@
             // 
             Column5.HeaderText = "RentalPerDay\n\n";
             Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Available";
-            Column6.Name = "Column6";
-            // 
             // comboBoxField
             // 
             comboBoxField.BackColor = Color.FromArgb(236, 240, 241);
@@ -273,18 +271,64 @@
             btnSearchExit.TabIndex = 22;
             btnSearchExit.Text = "EXIT";
             btnSearchExit.UseVisualStyleBackColor = false;
+            btnClear.FlatStyle = FlatStyle.Flat;
+
+            // comboBoxValue
+            btnClear.ForeColor = Color.FromArgb(29, 48, 88);
+            comboBoxValue.BackColor = Color.FromArgb(236, 240, 241);
+            comboBoxValue.Font = new Font("Segoe UI", 12F);
+            comboBoxValue.Location = new Point(465, 71);
+            comboBoxValue.Margin = new Padding(3, 2, 3, 2);
+            comboBoxValue.Name = "comboBoxValue";
+            comboBoxValue.Size = new Size(139, 22);
+            comboBoxValue.TabIndex = 24;
+            comboBoxValue.TextChanged += txtValue_TextChanged;
+            btnClear.UseVisualStyleBackColor = false;
             // 
-            // txtValue
+            // lblField
             // 
-            txtValue.BackColor = Color.FromArgb(236, 240, 241);
-            txtValue.BorderStyle = BorderStyle.None;
-            txtValue.Font = new Font("Segoe UI", 12F);
-            txtValue.Location = new Point(465, 71);
-            txtValue.Margin = new Padding(3, 2, 3, 2);
-            txtValue.Name = "txtValue";
-            txtValue.Size = new Size(139, 22);
-            txtValue.TabIndex = 24;
-            txtValue.TextChanged += txtValue_TextChanged;
+            lblField.AutoSize = true;
+            lblField.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblField.ForeColor = Color.FromArgb(29, 48, 88);
+            lblField.Location = new Point(58, 42);
+            lblField.Name = "lblField";
+            lblField.Size = new Size(53, 25);
+            lblField.TabIndex = 17;
+            lblField.Text = "Field";
+            lblField.Click += lblMake_Click;
+            // 
+            // lblOperator
+            // 
+            lblOperator.AutoSize = true;
+            lblOperator.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblOperator.ForeColor = Color.FromArgb(29, 48, 88);
+            lblOperator.Location = new Point(259, 42);
+            lblOperator.Name = "lblOperator";
+            lblOperator.Size = new Size(89, 25);
+            lblOperator.TabIndex = 18;
+            lblOperator.Text = "Operator";
+            lblOperator.Click += label2_Click;
+            // 
+            // lblValue
+            // 
+            lblValue.AutoSize = true;
+            lblValue.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
+            lblValue.ForeColor = Color.FromArgb(29, 48, 88);
+            lblValue.Location = new Point(465, 42);
+            lblValue.Name = "lblValue";
+            lblValue.Size = new Size(59, 25);
+            lblValue.TabIndex = 19;
+            lblValue.Text = "Value";
+            lblValue.Click += label3_Click;
+            // 
+            // comboBoxOperator
+            // 
+            comboBoxOperator.BackColor = Color.FromArgb(236, 240, 241);
+            comboBoxOperator.FormattingEnabled = true;
+            comboBoxOperator.Location = new Point(259, 70);
+            comboBoxOperator.Name = "comboBoxOperator";
+            comboBoxOperator.Size = new Size(145, 23);
+            comboBoxOperator.TabIndex = 20;
             // 
             // FormSearch
             // 
@@ -310,6 +354,8 @@
         private GroupBox groupBox2;
         private Label lblSearch;
         private ComboBox comboBoxField;
+        private ComboBox comboBoxOperator;
+        private ComboBox comboBoxValue;
         private DataGridView dataGridView;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -317,13 +363,13 @@
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+   
         private Button btnSearchForm;
         private Button btnClear;
         private Label lblValue;
         private Label lblOperator;
         private Label lblField;
-        private ComboBox comboBoxOperator;
         private Button btnSearchExit;
-        private TextBox txtValue;
     }
 }

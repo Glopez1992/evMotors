@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
+using FormEVMotors;
 
 
 namespace WinFormsApp1
@@ -19,7 +20,6 @@ namespace WinFormsApp1
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
         private bool dataChanged = true;
-
         private int currentIndex = 0;
 
 
@@ -63,12 +63,10 @@ namespace WinFormsApp1
 
             txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
             cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
-            txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize"].ToString();
+            txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize_Power"].ToString();
             dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
             txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
             chkAvailable.Checked = Convert.ToBoolean(dataTable.Rows[currentIndex]["Available"]);
-
-
             BtnPrevious.Enabled = currentIndex > 0;
             BtnFirst.Enabled = currentIndex > 0;
             BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
@@ -133,14 +131,14 @@ namespace WinFormsApp1
                 {
                     connection.Open();
                     // create and execute SQL Command with parameters
-                    string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize, DateRegistered, RentalPerDay, Available)"
-                        + "VALUES (@VehicleRegNo,@Make, @EngineSize,@DateRegistered, @RentalPerDay, @Available)";
+                    string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize_Power, DateRegistered, RentalPerDay, Available)"
+                        + "VALUES (@VehicleRegNo,@Make, @EngineSize_Power,@DateRegistered, @RentalPerDay, @Available)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         //use parameters to add data
                         command.Parameters.AddWithValue("@VehicleRegNo", vehicleRegNo);
                         command.Parameters.AddWithValue("@Make", make);
-                        command.Parameters.AddWithValue("@EngineSize", engineSize);
+                        command.Parameters.AddWithValue("@EngineSize_Power", engineSize); 
                         command.Parameters.AddWithValue("@DateRegistered", dateRegistered);
                         command.Parameters.AddWithValue("@RentalPerDay", rentalPerDay);
                         command.Parameters.AddWithValue("@Available", available);
@@ -177,7 +175,7 @@ namespace WinFormsApp1
                 string updateQuery = @"
                     UPDATE VehicleRegister
                     SET Make = @Make,
-                        EngineSize = @EngineSize,
+                        EngineSize_Power = @EngineSize_Power,
                         DateRegistered = @DateRegistered,
                         RentalPerDay = @RentalPerDay,
                         Available = @Available
@@ -186,7 +184,7 @@ namespace WinFormsApp1
                 using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                 {
                     updateCommand.Parameters.AddWithValue("@Make", cobMake.Text);
-                    updateCommand.Parameters.AddWithValue("@EngineSize", txtEngineSize.Text);
+                    updateCommand.Parameters.AddWithValue("@EngineSize_Power", txtEngineSize.Text);
                     updateCommand.Parameters.AddWithValue("@DateRegistered", dateTimePicker1.Value.Date);
                     try
                     {
@@ -284,6 +282,7 @@ namespace WinFormsApp1
 
         private void ValidateEngineSize(String engineSize)
         {
+            engineSize = engineSize.Replace(" ", "");
             string engineSizePattern = @"^(\d(.\d{1})?L|\d{2,4}kW)$";
             if (!Regex.IsMatch(engineSize, engineSizePattern))
                 throw new FormatException("Invalid engine size format.\n\nPlease enter the engine size in one of the following formats:\n\n" +
@@ -301,26 +300,36 @@ namespace WinFormsApp1
             }
             else
             {
-                using (connection = new SqlConnection(connectionString))
+                DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this vehicle?",
+                "Delete Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    connection.Open();
-                    string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
-                    using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                    using (connection = new SqlConnection(connectionString))
                     {
-                        command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
-                        command.ExecuteNonQuery();
+                        connection.Open();
+                        string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
+                        using (SqlCommand command = new SqlCommand(deleteCommand, connection))
+                        {
+                            command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                            command.ExecuteNonQuery();
+                        }
                     }
+                    dataChanged = true;
+                    LoadData();
+                    if (currentIndex > 0)
+                        currentIndex = 0;
+
+                    if (currentIndex < dataTable.Rows.Count - 1)
+                        currentIndex = dataTable.Rows.Count - 1;
+
+                    DisplayRecord();
+                    MessageBox.Show("Vehicle deleted successfully.");
                 }
-                dataChanged = true;
-                LoadData();
-                if (currentIndex > 0)
-                    currentIndex = 0;
-
-                if (currentIndex < dataTable.Rows.Count - 1)
-                    currentIndex = dataTable.Rows.Count - 1;
-
-                DisplayRecord();
-                MessageBox.Show("Record deleted successfully.");
+                
 
             }
 
@@ -348,7 +357,7 @@ namespace WinFormsApp1
                 try
                 {
                     conn.Open();
-                    string query = "SELECT MakeName FROM CarMake";  
+                    string query = "SELECT Make FROM CarMake";  
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -367,7 +376,8 @@ namespace WinFormsApp1
 
 private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            FormSearch searchForm = new FormSearch();
+            searchForm.ShowDialog();
         }
     }
 }
