@@ -132,11 +132,12 @@ namespace FormEVMotors
 
                     dataGridView.DataSource = null;
                     dataGridView.Columns.Clear();
-
                     dataGridView.DataSource = results;
 
                 }// end Using SQL Command - command closes
             }
+
+           
         }
         
 

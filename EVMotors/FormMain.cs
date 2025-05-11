@@ -133,8 +133,7 @@ namespace WinFormsApp1
                     connection.Open();
                     // create and execute SQL Command with parameters
                     string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize/Power, DateRegistered, RentalPerDay, Available)"
-                       + "VALUES (@VehicleRegNo,@Make, @EngineSize/Power,@DateRegistered, @RentalPerDay, @Available)";
-                    
+                        + "VALUES (@VehicleRegNo,@Make, @EngineSize/Power,@DateRegistered, @RentalPerDay, @Available)";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         //use parameters to add data
@@ -177,7 +176,12 @@ namespace WinFormsApp1
                 string updateQuery = @"
                     UPDATE VehicleRegister
                     SET Make = @Make,
+<<<<<<< HEAD
                         EngineSize = @EngineSize/Power,                        DateRegistered = @DateRegistered,
+=======
+                        EngineSize = @EngineSize/Power,
+                        DateRegistered = @DateRegistered,
+>>>>>>> 5044bc056f37b4df0705d027c4b41e0c5c4dc459
                         RentalPerDay = @RentalPerDay,
                         Available = @Available
                     WHERE VehicleRegNo = @VehicleRegNo";
