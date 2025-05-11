@@ -1,4 +1,7 @@
-﻿namespace FormEVMotors
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace FormEVMotors
 {
     partial class FormSearch
     {
@@ -28,12 +31,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
+
             groupBox2 = new GroupBox();
             comboBoxOperator = new ComboBox();
             lblValue = new Label();
@@ -52,9 +61,6 @@
             lblSearch = new Label();
             btnSearchExit = new Button();
             txtValue = new TextBox();
-            lblValue = new Label();
-            comboBoxOperator = new ComboBox();
-            comboBoxValue = new ComboBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -62,10 +68,8 @@
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(txtValue);
             groupBox2.Controls.Add(btnSearchExit);
             groupBox2.Controls.Add(comboBoxOperator);
-            groupBox2.Controls.Add(lblValue);
             groupBox2.Controls.Add(lblOperator);
             groupBox2.Controls.Add(lblField);
             groupBox2.Controls.Add(btnClear);
@@ -79,17 +83,17 @@
             groupBox2.Padding = new Padding(3, 2, 3, 2);
             groupBox2.Size = new Size(680, 560);
             groupBox2.TabIndex = 11;
+
             // comboBoxOperator
-            groupBox2.Enter += groupBox1_Enter;
             comboBoxOperator.BackColor = Color.FromArgb(236, 240, 241);
             comboBoxOperator.FormattingEnabled = true;
             comboBoxOperator.Location = new Point(259, 70);
             comboBoxOperator.Name = "comboBoxOperator";
             comboBoxOperator.Size = new Size(145, 23);
             comboBoxOperator.TabIndex = 20;
-            lblSearch.Location = new Point(227, 38);
+            //
             // lblValue
-            lblSearch.Size = new Size(233, 36);
+            //
             lblValue.AutoSize = true;
             lblValue.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold);
             lblValue.ForeColor = Color.FromArgb(29, 48, 88);
@@ -99,7 +103,7 @@
             lblValue.TabIndex = 19;
             lblValue.Text = "Value";
             lblValue.Click += label3_Click;
-            comboBoxField.FormattingEnabled = true;
+            //
             // lblOperator
             // 
             lblOperator.AutoSize = true;
@@ -157,27 +161,26 @@
             btnSearchForm.TabIndex = 10;
             btnSearchForm.Text = "Search";
             btnSearchForm.UseVisualStyleBackColor = false;
-            btnSearchForm.Click += btnExit_Click;
+             // 
+            // dataGridView
             // 
-            comboBoxField.Location = new Point(58, 73);
-            comboBoxField.Name = "comboBoxField";
             dataGridView.AllowUserToAddRows = false;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.TopCenter;
             dataGridViewCellStyle6.BackColor = Color.FromArgb(236, 240, 241);
             dataGridViewCellStyle6.ForeColor = Color.Gray;
             dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            // 
-            // dataGridView
-            // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(236, 240, 241);
-            dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(236, 240, 241);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(123, 138, 150);
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(123, 138, 150);
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = Color.FromArgb(209, 233, 248);
             dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
@@ -186,10 +189,10 @@
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
             dataGridView.DefaultCellStyle = dataGridViewCellStyle8;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridView.EnableHeadersVisualStyles = false;
+            dataGridView.GridColor = SystemColors.InactiveCaption;
+            dataGridView.Location = new Point(14, 191);
+            dataGridView.Name = "dataGridView";
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.FromArgb(236, 240, 241);
             dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
@@ -201,12 +204,6 @@
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
             dataGridView.Size = new Size(649, 294);
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            dataGridView.Size = new Size(643, 294);
             dataGridView.TabIndex = 9;
             // 
             // Column1
@@ -332,15 +329,6 @@
             comboBoxOperator.Size = new Size(145, 23);
             comboBoxOperator.TabIndex = 20;
             // 
-            // comboBoxValue
-            // 
-            comboBoxValue.BackColor = Color.FromArgb(236, 240, 241);
-            comboBoxValue.FormattingEnabled = true;
-            comboBoxValue.Location = new Point(465, 70);
-            comboBoxValue.Name = "comboBoxValue";
-            comboBoxValue.Size = new Size(145, 23);
-            comboBoxValue.TabIndex = 21;
-            // 
             // FormSearch
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -365,6 +353,8 @@
         private GroupBox groupBox2;
         private Label lblSearch;
         private ComboBox comboBoxField;
+        private ComboBox comboBoxOperator;
+        private TextBox txtValue;
         private DataGridView dataGridView;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -372,13 +362,15 @@
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn Column10;
         private Button btnSearchForm;
         private Button btnClear;
         private Label lblValue;
         private Label lblOperator;
         private Label lblField;
-        private ComboBox comboBoxOperator;
         private Button btnSearchExit;
-        private TextBox txtValue;
     }
 }
