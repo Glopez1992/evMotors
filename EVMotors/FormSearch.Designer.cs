@@ -106,6 +106,7 @@ namespace FormEVMotors
             btnSearchExit.TabIndex = 22;
             btnSearchExit.Text = "EXIT";
             btnSearchExit.UseVisualStyleBackColor = false;
+            btnSearchExit.Click += btnSearchExit_Click;
             // 
             // comboBoxOperator
             // 

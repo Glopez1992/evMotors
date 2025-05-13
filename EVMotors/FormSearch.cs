@@ -149,11 +149,6 @@ namespace FormEVMotors
 
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -180,6 +175,11 @@ namespace FormEVMotors
             comboBoxOperator.SelectedIndex = -1;
             txtValue.ResetText();
 
+        }
+
+        private void btnSearchExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void LoadComboBoxes()
