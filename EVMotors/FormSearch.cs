@@ -23,7 +23,7 @@ namespace FormEVMotors
         string[] fields = { "VehicleRegNo", "Make", "EngineSize_Power", "DateRegistered",
                 "RentalPerDay", "Available" };
 
-        private string connectionString = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -159,7 +159,7 @@ namespace FormEVMotors
             LoadComboBoxes();
             comboBoxField.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxOperator.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
+            this.Text = "Search";
             this.AcceptButton = btnSearchForm;
             this.ActiveControl = lblSearch;
         }

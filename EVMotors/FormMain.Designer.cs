@@ -420,6 +420,7 @@
             label1.Size = new Size(302, 36);
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
+            label1.Click += label1_Click;
             // 
             // sqlCommand1
             // 
@@ -442,6 +443,7 @@
             Controls.Add(btnUpdate);
             Controls.Add(groupBox1);
             Margin = new Padding(3, 2, 3, 2);
+            MaximizeBox = false;
             Name = "FormMain";
             Text = "EVMotors";
             Load += Form1_Load;
