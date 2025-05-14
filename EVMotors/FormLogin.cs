@@ -15,6 +15,8 @@ namespace MainFormEVMotors
 {
     public partial class FormLogin : Form
     {
+        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+
 
         public FormLogin()
         {
@@ -52,8 +54,13 @@ namespace MainFormEVMotors
         {
             string user = txtLogin.Text.Trim(); // Trim whitespace for better accuracy
             string password = txtPassword.Text;
+            if (password.Contains(" "))
+            {
+                MessageBox.Show("Password cannot contain spaces.", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -66,7 +73,7 @@ namespace MainFormEVMotors
                 {
                     connection.Open();
 
-                    string checkQuery = "SELECT * FROM users WHERE [username] = @user AND [password] = @password";
+                    string checkQuery = "SELECT * FROM users WHERE [username] = @user AND password = @password";
 
                     using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
                     {
@@ -103,7 +110,7 @@ namespace MainFormEVMotors
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
-            txtPassword.PasswordChar = '*';
+            
             txtPassword.UseSystemPasswordChar = true;
 
         }

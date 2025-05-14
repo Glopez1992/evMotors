@@ -13,9 +13,7 @@ using FormEVMotors;
 namespace WinFormsApp1
 {
     public partial class FormMain : Form
-    {
-
-        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+    {   public  string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -161,7 +159,7 @@ namespace WinFormsApp1
         {
             try
             {
-                ValidateUniqueVehicleRegNo(txtEngineSize.Text);
+                ValidateUniqueVehicleRegNo(txtVehicleRegNo.Text);
                 ValidateEngineSize(txtEngineSize.Text);
             }
             catch (Exception ex)
@@ -262,6 +260,7 @@ namespace WinFormsApp1
             }
 
 
+           
             using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -271,6 +270,8 @@ namespace WinFormsApp1
                 {
                     checkCmd.Parameters.AddWithValue("@vehicleRegNo", vehicleRegNo);
                     var result = checkCmd.ExecuteScalar();
+                   
+
                     if (result != null)
                     {
                         throw new Exception("A vehicle with this registration number already exists.");

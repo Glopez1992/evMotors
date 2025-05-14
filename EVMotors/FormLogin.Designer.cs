@@ -42,6 +42,7 @@
             txtLogin.Font = new Font("Segoe UI", 16.2F);
             txtLogin.Location = new Point(178, 244);
             txtLogin.Margin = new Padding(3, 2, 3, 2);
+            txtLogin.MaxLength = 50;
             txtLogin.Name = "txtLogin";
             txtLogin.PlaceholderText = "Username";
             txtLogin.Size = new Size(293, 36);
@@ -98,6 +99,7 @@
             txtPassword.Font = new Font("Segoe UI", 16.2F);
             txtPassword.Location = new Point(178, 290);
             txtPassword.Margin = new Padding(3, 2, 3, 2);
+            txtPassword.MaxLength = 50;
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
             txtPassword.PlaceholderText = "Password";
