@@ -338,10 +338,10 @@ namespace WinFormsApp1
         private void btnExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to exit?",
-                "Exit Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            "Are you sure you want to exit the program?",
+            "Confirm Exit",
+            MessageBoxButtons.YesNoCancel,
+            MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
