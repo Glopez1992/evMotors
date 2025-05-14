@@ -341,7 +341,7 @@ namespace WinFormsApp1
             DialogResult result = MessageBox.Show(
             "Are you sure you want to exit the program?",
             "Confirm Exit",
-            MessageBoxButtons.YesNoCancel,
+            MessageBoxButtons.YesNo,
             MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
