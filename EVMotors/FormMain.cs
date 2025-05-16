@@ -8,18 +8,20 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
 using FormEVMotors;
+using System.CodeDom;
 
 
 namespace WinFormsApp1
 {
     public partial class FormMain : Form
-    {   public  string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+    {
+
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
         private bool dataChanged = true;
         private int currentIndex = 0;
-
+        
 
         public FormMain()
         {
@@ -32,21 +34,24 @@ namespace WinFormsApp1
             MessageBox.Show("Connected to Database");
             DisplayRecord();
             cobMake.DropDownHeight = 300;
+            
 
         }
 
         private void LoadData()
         {
+            
             if (dataChanged == true)
             {
                 try
                 {
-                    using (connection = new SqlConnection(connectionString))
+                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
                     {
                         string query = "SELECT * FROM VehicleRegister";
                         SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
                         dataTable = new DataTable();
                         adapter.Fill(dataTable);
+                        
                     }
                 }
                 catch (Exception ex)
@@ -58,7 +63,7 @@ namespace WinFormsApp1
 
         private void DisplayRecord()
         {
-
+            LoadCarMakes();
             txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
             cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
             txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize_Power"].ToString();
@@ -72,7 +77,6 @@ namespace WinFormsApp1
             int adjustedIndex = currentIndex + 1;
             lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
 
-            LoadCarMakes();
 
         }
 
@@ -81,73 +85,50 @@ namespace WinFormsApp1
             dataChanged = true;
             try
             {
+
                 string vehicleRegNo = txtVehicleRegNo.Text;
                 string make = cobMake.Text;
-                if (string.IsNullOrWhiteSpace(make))
-                {
-                    MessageBox.Show("Make is a required field.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (make.Length > 50)
-                {
-                    MessageBox.Show("Make cannot exceed 50 characters.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 string engineSize = txtEngineSize.Text;
-
-                DateTime dateRegistered;
-                if (!DateTime.TryParse(dateTimePicker1.Value.ToString(), out dateRegistered) || dateRegistered > DateTime.Now)
-                {
-                    MessageBox.Show("Date Registered must be a valid date and not in the future.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                decimal rentalPerDay;
-                if (!decimal.TryParse(txtRentalPerDay.Text, out rentalPerDay))
-                {
-                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                DateTime dateRegistered = dateTimePicker1.Value;
+                string rentalPerDayInput = txtRentalPerDay.Text;
                 bool available = chkAvailable.Checked;
 
-                //Check if the vehicleRegNo already exists in the database
+                VehicleRegister.ValidateVehicleRegNo(vehicleRegNo, DataAccess.DataBaseConfig.ConnectionString);
+                VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
+                decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
 
-                try
-                {
-                    ValidateUniqueVehicleRegNo(txtVehicleRegNo.Text);
-                    ValidateEngineSize(txtEngineSize.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                // create and open connection
-                using (connection = new SqlConnection(connectionString))
+                VehicleRegister vehicle = new VehicleRegister(
+                    vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
+
+
                 {
-                    connection.Open();
-                    // create and execute SQL Command with parameters
-                    string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize_Power, DateRegistered, RentalPerDay, Available)"
-                        + "VALUES (@VehicleRegNo,@Make, @EngineSize_Power,@DateRegistered, @RentalPerDay, @Available)";
-                    using (SqlCommand command = new SqlCommand(query, connection))
+
+                    // create and open connection
+                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
                     {
-                        //use parameters to add data
-                        command.Parameters.AddWithValue("@VehicleRegNo", vehicleRegNo);
-                        command.Parameters.AddWithValue("@Make", make);
-                        command.Parameters.AddWithValue("@EngineSize_Power", engineSize);
-                        command.Parameters.AddWithValue("@DateRegistered", dateRegistered);
-                        command.Parameters.AddWithValue("@RentalPerDay", rentalPerDay);
-                        command.Parameters.AddWithValue("@Available", available);
-                        command.ExecuteNonQuery(); // execute SQL INSERT statement 
+                        connection.Open();
+                        // create and execute SQL Command with parameters
+                        string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize_Power, DateRegistered, RentalPerDay, Available)"
+                            + "VALUES (@VehicleRegNo,@Make, @EngineSize_Power,@DateRegistered, @RentalPerDay, @Available)";
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            //use parameters to add data
+                            command.Parameters.AddWithValue("@VehicleRegNo", vehicleRegNo);
+                            command.Parameters.AddWithValue("@Make", make);
+                            command.Parameters.AddWithValue("@EngineSize_Power", engineSize);
+                            command.Parameters.AddWithValue("@DateRegistered", dateRegistered);
+                            command.Parameters.AddWithValue("@RentalPerDay", rentalPerDay);
+                            command.Parameters.AddWithValue("@Available", available);
+                            command.ExecuteNonQuery(); // execute SQL INSERT statement 
 
-                    }// end Using SQL Command - command closes
-                } // end Using SQL connection - connection closes
-                LoadData();
-                currentIndex = dataTable.Rows.Count - 1;
-                DisplayRecord();
-                MessageBox.Show("Record Inserted");
+                        }// end Using SQL Command - command closes
+                    } // end Using SQL connection - connection closes
+                    LoadData();
+                    currentIndex = dataTable.Rows.Count - 1;
+                    DisplayRecord();
+                    MessageBox.Show("Record Inserted");
+                }
             }
             catch (Exception exception)
             {
@@ -159,15 +140,29 @@ namespace WinFormsApp1
         {
             try
             {
-                ValidateUniqueVehicleRegNo(txtVehicleRegNo.Text);
-                ValidateEngineSize(txtEngineSize.Text);
+
+                string vehicleRegNo = txtVehicleRegNo.Text;
+                string make = cobMake.Text;
+                string engineSize = txtEngineSize.Text;
+                DateTime dateRegistered = dateTimePicker1.Value;
+                string rentalPerDayInput = txtRentalPerDay.Text;
+                bool available = chkAvailable.Checked;
+
+
+                VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
+                decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
+
+                var vehicle = new VehicleRegister(vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
+
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            using (connection = new SqlConnection(connectionString))
+
+            using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
             {
                 connection.Open();
                 string updateQuery = @"
@@ -214,7 +209,9 @@ namespace WinFormsApp1
             dataChanged = true;
             LoadData();
             DisplayRecord();
+            
         }
+        
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -249,50 +246,6 @@ namespace WinFormsApp1
             DisplayRecord();
         }
 
-        private void ValidateUniqueVehicleRegNo(String vehicleRegNo)
-        {
-            string vehicleRegNopattern = @"^\d{3}-[A-Z]{1,2}-\d{3}$";
-            string input = txtVehicleRegNo.Text.Trim();
-
-            if (!Regex.IsMatch(input, vehicleRegNopattern))
-            {
-                throw new FormatException("Vehicle Registration Number must follow the format 123-AB-456");
-            }
-
-
-           
-            using (connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                string checkQuery = "SELECT vehicleRegNo FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
-                using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
-                {
-                    checkCmd.Parameters.AddWithValue("@vehicleRegNo", vehicleRegNo);
-                    var result = checkCmd.ExecuteScalar();
-                   
-
-                    if (result != null)
-                    {
-                        throw new Exception("A vehicle with this registration number already exists.");
-                    }
-                }
-            }
-
-        }
-
-        private void ValidateEngineSize(String engineSize)
-        {
-            engineSize = engineSize.Replace(" ", "");
-            string engineSizePattern = @"^(\d(.\d{1})?L|\d{2,4}kW)$";
-            if (!Regex.IsMatch(engineSize, engineSizePattern))
-                throw new FormatException("Invalid engine size format.\n\nPlease enter the engine size in one of the following formats:\n\n" +
-    "• Example 1: 1.0L (liters)\n" +
-    "• Example 2: 200kW (kilowatts)");
-
-        }
-
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (!chkAvailable.Checked)
@@ -309,7 +262,7 @@ namespace WinFormsApp1
 
                 if (result == DialogResult.Yes)
                 {
-                    using (connection = new SqlConnection(connectionString))
+                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
                     {
                         connection.Open();
                         string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
@@ -353,7 +306,7 @@ namespace WinFormsApp1
         private void LoadCarMakes()
         {
             cobMake.Items.Clear();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
             {
                 try
                 {
@@ -380,8 +333,12 @@ namespace WinFormsApp1
             FormSearch searchForm = new FormSearch();
             searchForm.ShowDialog();
         }
-
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static FormEVMotors.DataAccess;
 
 
 
@@ -23,7 +24,6 @@ namespace FormEVMotors
         string[] fields = { "VehicleRegNo", "Make", "EngineSize_Power", "DateRegistered",
                 "RentalPerDay", "Available" };
 
-        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         private SqlConnection connection = null;
         private SqlDataReader reader = null;
         private DataTable dataTable = null;
@@ -64,85 +64,86 @@ namespace FormEVMotors
                 return;
             }
             else
-                using (connection = new SqlConnection(connectionString))
+                using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
                 {
-                    connection.Open();
-                    string query = $"SELECT * FROM VehicleRegister WHERE [{selectedField}] {selectedOperator} @value";
-                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        if (!operatorsArray.Contains(selectedOperator))
+                        connection.Open();
+                        string query = $"SELECT * FROM VehicleRegister WHERE [{selectedField}] {selectedOperator} @value";
+                        using (SqlCommand command = new SqlCommand(query, connection))
                         {
-                            MessageBox.Show("Please select a valid operator.");
-                            return;
-                        }
-                        if (!fields.Contains(selectedField))
-                        {
-                            MessageBox.Show("Please select a valid field.");
-                        }
-
-                        if (selectedField == "DateRegistered") // or whatever your field is called
-                        {
-                            DateTime parsedDate;
-                            if (!DateTime.TryParse(selectedValue, out parsedDate))
+                            if (!operatorsArray.Contains(selectedOperator))
                             {
-                                MessageBox.Show("Please enter a valid date in the format DD/MM/YYYY", "Invalid Date");
+                                MessageBox.Show("Please select a valid operator.");
                                 return;
                             }
+                            if (!fields.Contains(selectedField))
+                            {
+                                MessageBox.Show("Please select a valid field.");
+                            }
 
-                            command.Parameters.AddWithValue("@value", parsedDate);
-                        }
+                            if (selectedField == "DateRegistered") // or whatever your field is called
+                            {
+                                DateTime parsedDate;
+                                if (!DateTime.TryParse(selectedValue, out parsedDate))
+                                {
+                                    MessageBox.Show("Please enter a valid date in the format DD/MM/YYYY", "Invalid Date");
+                                    return;
+                                }
 
-                        else if (selectedField == "Available")
+                                command.Parameters.AddWithValue("@value", parsedDate);
+                            }
 
-                        {
-                            if (selectedValue.Trim().Equals("Yes", StringComparison.OrdinalIgnoreCase))
-                                selectedValue = "1";
-                            else if (selectedValue.Trim().Equals("No", StringComparison.OrdinalIgnoreCase))
-                                selectedValue = "0";
+                            else if (selectedField == "Available")
+
+                            {
+                                if (selectedValue.Trim().Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                                    selectedValue = "1";
+                                else if (selectedValue.Trim().Equals("No", StringComparison.OrdinalIgnoreCase))
+                                    selectedValue = "0";
+                                else
+                                {
+                                    MessageBox.Show("Please enter 'Yes' or 'No' for availability.", "Input Error");
+                                    return;
+                                }
+
+                                // Add parameter as BIT (Boolean)
+                                command.Parameters.AddWithValue("@value", selectedValue == "1");
+
+
+                            }
+
+                            else if (selectedField == "RentalPerDay")
+                            {
+                                decimal rentalPerDay;
+                                if (!decimal.TryParse(txtValue.Text, out rentalPerDay))
+                                {
+                                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else
+                                    command.Parameters.AddWithValue("@value", rentalPerDay);
+                            }
                             else
-                            {
-                                MessageBox.Show("Please enter 'Yes' or 'No' for availability.", "Input Error");
-                                return;
+                            { // For all other fields, add parameter normally
+                                command.Parameters.AddWithValue("@value", selectedValue);
                             }
 
-                            // Add parameter as BIT (Boolean)
-                            command.Parameters.AddWithValue("@value", selectedValue == "1");
-
-
-                        }
-
-                        else if (selectedField == "RentalPerDay")
-                        {
-                            decimal rentalPerDay;
-                            if (!decimal.TryParse(txtValue.Text, out rentalPerDay))
+                            using (var adapter = new SqlDataAdapter(command))
                             {
-                                MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                            else
-                                command.Parameters.AddWithValue("@value", rentalPerDay);
+                                DataTable results = new DataTable();
+                                adapter.Fill(results); // Fills the DataTable with SQL results
+
+                                dataGridView.DataSource = null;
+                                dataGridView.Columns.Clear();
+                                dataGridView.DataSource = results;
+
+                            }// end Using SQL Command - command closes
                         }
-                        else
-                        { // For all other fields, add parameter normally
-                            command.Parameters.AddWithValue("@value", selectedValue);
-                        }
 
-                        using (var adapter = new SqlDataAdapter(command))
-                        {
-                            DataTable results = new DataTable();
-                            adapter.Fill(results); // Fills the DataTable with SQL results
 
-                            dataGridView.DataSource = null;
-                            dataGridView.Columns.Clear();
-                            dataGridView.DataSource = results;
-
-                        }// end Using SQL Command - command closes
                     }
-
-
                 }
         }
-
 
         private void lblMake_Click(object sender, EventArgs e)
         {
