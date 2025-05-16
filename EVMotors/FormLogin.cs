@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FormEVMotors;
 using Microsoft.Data.SqlClient;
 using WinFormsApp1;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -53,9 +54,7 @@ namespace MainFormEVMotors
             string user = txtLogin.Text.Trim(); // Trim whitespace for better accuracy
             string password = txtPassword.Text;
 
-            string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
             {
                 if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
                 {
