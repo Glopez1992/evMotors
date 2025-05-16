@@ -43,7 +43,7 @@
             txtLogin.Location = new Point(178, 244);
             txtLogin.Margin = new Padding(3, 2, 3, 2);
             txtLogin.Name = "txtLogin";
-            txtLogin.PlaceholderText = "E-mail";
+            txtLogin.PlaceholderText = "Username";
             txtLogin.Size = new Size(293, 36);
             txtLogin.TabIndex = 21;
             txtLogin.TextChanged += textBox1_TextChanged;
@@ -119,6 +119,7 @@
             Controls.Add(lblSubtitle1);
             DoubleBuffered = true;
             Margin = new Padding(3, 2, 3, 2);
+            MaximizeBox = false;
             Name = "FormLogin";
             Text = "Form2";
             Load += Form2_Load;

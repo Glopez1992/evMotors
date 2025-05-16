@@ -265,6 +265,7 @@
             groupBox1.Size = new Size(585, 432);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // dateTimePicker1
             // 
@@ -278,6 +279,7 @@
             // cobMake
             // 
             cobMake.BackColor = Color.FromArgb(236, 240, 241);
+            cobMake.DropDownStyle = ComboBoxStyle.DropDownList;
             cobMake.Font = new Font("Segoe UI", 12F);
             cobMake.FormattingEnabled = true;
             cobMake.Location = new Point(344, 114);
@@ -420,6 +422,7 @@
             label1.Size = new Size(302, 36);
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
+            label1.Click += label1_Click;
             // 
             // sqlCommand1
             // 
@@ -442,6 +445,7 @@
             Controls.Add(btnUpdate);
             Controls.Add(groupBox1);
             Margin = new Padding(3, 2, 3, 2);
+            MaximizeBox = false;
             Name = "FormMain";
             Text = "EVMotors";
             Load += Form1_Load;
