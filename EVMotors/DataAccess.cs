@@ -11,7 +11,7 @@ namespace FormEVMotors
     {
         public static class DataBaseConfig
         {
-            public static string ConnectionString { get; } = "Server=LAPTOP-2PILI9VG\\SQLEXPRESS01;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
+            public static string ConnectionString { get; } = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
         }
     }
 }

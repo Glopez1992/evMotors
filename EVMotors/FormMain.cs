@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
 using FormEVMotors;
+using System.CodeDom;
 
 
 namespace WinFormsApp1
@@ -20,6 +21,8 @@ namespace WinFormsApp1
         private DataTable dataTable = null;
         private bool dataChanged = true;
         private int currentIndex = 0;
+        
+        
 
 
         public FormMain()
@@ -33,11 +36,13 @@ namespace WinFormsApp1
             MessageBox.Show("Connected to Database");
             DisplayRecord();
             cobMake.DropDownHeight = 300;
+            
 
         }
 
         private void LoadData()
         {
+            
             if (dataChanged == true)
             {
                 try
@@ -48,6 +53,7 @@ namespace WinFormsApp1
                         SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
                         dataTable = new DataTable();
                         adapter.Fill(dataTable);
+                        
                     }
                 }
                 catch (Exception ex)
@@ -89,12 +95,13 @@ namespace WinFormsApp1
                 string rentalPerDayInput = txtRentalPerDay.Text;
                 bool available = chkAvailable.Checked;
 
+                VehicleRegister.ValidateVehicleRegNo(vehicleRegNo, DataAccess.DataBaseConfig.ConnectionString);
                 VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
                 decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
 
 
-            VehicleRegister vehicle = new VehicleRegister(
-                vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
+                VehicleRegister vehicle = new VehicleRegister(
+                    vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
 
 
                 {
@@ -145,7 +152,9 @@ namespace WinFormsApp1
 
                 VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
                 decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
+
                 var vehicle = new VehicleRegister(vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
+
 
             }
             catch (Exception ex)
@@ -153,6 +162,7 @@ namespace WinFormsApp1
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
             {
                 connection.Open();
@@ -200,7 +210,9 @@ namespace WinFormsApp1
             dataChanged = true;
             LoadData();
             DisplayRecord();
+            
         }
+        
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -323,8 +335,12 @@ namespace WinFormsApp1
             FormSearch searchForm = new FormSearch();
             searchForm.ShowDialog();
         }
-
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }

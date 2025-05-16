@@ -67,9 +67,10 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnUpdate.ForeColor = Color.FromArgb(47, 116, 193);
-            btnUpdate.Location = new Point(42, 128);
+            btnUpdate.Location = new Point(37, 96);
+            btnUpdate.Margin = new Padding(3, 2, 3, 2);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(110, 41);
+            btnUpdate.Size = new Size(96, 31);
             btnUpdate.TabIndex = 0;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -84,9 +85,10 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = Color.FromArgb(47, 116, 193);
-            btnAdd.Location = new Point(175, 128);
+            btnAdd.Location = new Point(153, 96);
+            btnAdd.Margin = new Padding(3, 2, 3, 2);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(110, 41);
+            btnAdd.Size = new Size(96, 31);
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = false;
@@ -101,9 +103,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearch.ForeColor = Color.FromArgb(47, 116, 193);
-            btnSearch.Location = new Point(309, 128);
+            btnSearch.Location = new Point(270, 96);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(110, 41);
+            btnSearch.Size = new Size(96, 31);
             btnSearch.TabIndex = 2;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = false;
@@ -118,9 +121,10 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.FromArgb(47, 116, 193);
-            btnCancel.Location = new Point(441, 128);
+            btnCancel.Location = new Point(386, 96);
+            btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(110, 41);
+            btnCancel.Size = new Size(96, 31);
             btnCancel.TabIndex = 3;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;
@@ -135,9 +139,10 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDelete.ForeColor = Color.FromArgb(208, 72, 55);
-            btnDelete.Location = new Point(574, 128);
+            btnDelete.Location = new Point(502, 96);
+            btnDelete.Margin = new Padding(3, 2, 3, 2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(110, 41);
+            btnDelete.Size = new Size(96, 31);
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
@@ -152,9 +157,10 @@
             btnExit.FlatStyle = FlatStyle.Flat;
             btnExit.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnExit.ForeColor = Color.FromArgb(29, 48, 88);
-            btnExit.Location = new Point(317, 613);
+            btnExit.Location = new Point(277, 460);
+            btnExit.Margin = new Padding(3, 2, 3, 2);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(110, 41);
+            btnExit.Size = new Size(96, 31);
             btnExit.TabIndex = 5;
             btnExit.Text = "EXIT";
             btnExit.UseVisualStyleBackColor = false;
@@ -169,9 +175,10 @@
             BtnFirst.FlatStyle = FlatStyle.Flat;
             BtnFirst.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnFirst.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnFirst.Location = new Point(32, 441);
+            BtnFirst.Location = new Point(28, 331);
+            BtnFirst.Margin = new Padding(3, 2, 3, 2);
             BtnFirst.Name = "BtnFirst";
-            BtnFirst.Size = new Size(91, 35);
+            BtnFirst.Size = new Size(80, 26);
             BtnFirst.TabIndex = 6;
             BtnFirst.Text = "First";
             BtnFirst.UseVisualStyleBackColor = false;
@@ -186,9 +193,10 @@
             BtnPrevious.FlatStyle = FlatStyle.Flat;
             BtnPrevious.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnPrevious.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnPrevious.Location = new Point(146, 443);
+            BtnPrevious.Location = new Point(128, 332);
+            BtnPrevious.Margin = new Padding(3, 2, 3, 2);
             BtnPrevious.Name = "BtnPrevious";
-            BtnPrevious.Size = new Size(91, 35);
+            BtnPrevious.Size = new Size(80, 26);
             BtnPrevious.TabIndex = 7;
             BtnPrevious.Text = "Previous";
             BtnPrevious.UseVisualStyleBackColor = false;
@@ -203,9 +211,10 @@
             BtnNext.FlatStyle = FlatStyle.Flat;
             BtnNext.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnNext.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnNext.Location = new Point(459, 536);
+            BtnNext.Location = new Point(402, 402);
+            BtnNext.Margin = new Padding(3, 2, 3, 2);
             BtnNext.Name = "BtnNext";
-            BtnNext.Size = new Size(91, 35);
+            BtnNext.Size = new Size(80, 26);
             BtnNext.TabIndex = 8;
             BtnNext.Text = "Next";
             BtnNext.UseVisualStyleBackColor = false;
@@ -220,9 +229,10 @@
             BtnLast.FlatStyle = FlatStyle.Flat;
             BtnLast.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnLast.ForeColor = Color.FromArgb(47, 116, 193);
-            BtnLast.Location = new Point(545, 440);
+            BtnLast.Location = new Point(477, 330);
+            BtnLast.Margin = new Padding(3, 2, 3, 2);
             BtnLast.Name = "BtnLast";
-            BtnLast.Size = new Size(91, 35);
+            BtnLast.Size = new Size(80, 26);
             BtnLast.TabIndex = 9;
             BtnLast.Text = " Last";
             BtnLast.UseVisualStyleBackColor = false;
@@ -248,19 +258,21 @@
             groupBox1.Controls.Add(lblEngineSize);
             groupBox1.Controls.Add(lblVehicleRegNumber);
             groupBox1.FlatStyle = FlatStyle.Flat;
-            groupBox1.Location = new Point(29, 95);
+            groupBox1.Location = new Point(25, 71);
+            groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(669, 576);
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(585, 432);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(32, 297);
-            dateTimePicker1.Margin = new Padding(3, 4, 3, 4);
+            dateTimePicker1.Location = new Point(28, 223);
             dateTimePicker1.MaxDate = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(228, 27);
+            dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 25;
             dateTimePicker1.Value = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             // 
@@ -270,9 +282,10 @@
             cobMake.DropDownStyle = ComboBoxStyle.DropDownList;
             cobMake.Font = new Font("Segoe UI", 12F);
             cobMake.FormattingEnabled = true;
-            cobMake.Location = new Point(393, 152);
+            cobMake.Location = new Point(344, 114);
+            cobMake.Margin = new Padding(3, 2, 3, 2);
             cobMake.Name = "cobMake";
-            cobMake.Size = new Size(151, 36);
+            cobMake.Size = new Size(133, 29);
             cobMake.TabIndex = 24;
             // 
             // chkAvailable
@@ -280,9 +293,10 @@
             chkAvailable.AutoSize = true;
             chkAvailable.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             chkAvailable.ForeColor = Color.FromArgb(59, 152, 97);
-            chkAvailable.Location = new Point(393, 293);
+            chkAvailable.Location = new Point(344, 220);
+            chkAvailable.Margin = new Padding(3, 2, 3, 2);
             chkAvailable.Name = "chkAvailable";
-            chkAvailable.Size = new Size(73, 35);
+            chkAvailable.Size = new Size(62, 29);
             chkAvailable.TabIndex = 23;
             chkAvailable.Text = "YES";
             chkAvailable.UseVisualStyleBackColor = true;
@@ -292,9 +306,10 @@
             txtRentalPerDay.BackColor = Color.FromArgb(236, 240, 241);
             txtRentalPerDay.BorderStyle = BorderStyle.None;
             txtRentalPerDay.Font = new Font("Segoe UI", 12F);
-            txtRentalPerDay.Location = new Point(32, 364);
+            txtRentalPerDay.Location = new Point(28, 273);
+            txtRentalPerDay.Margin = new Padding(3, 2, 3, 2);
             txtRentalPerDay.Name = "txtRentalPerDay";
-            txtRentalPerDay.Size = new Size(259, 27);
+            txtRentalPerDay.Size = new Size(227, 22);
             txtRentalPerDay.TabIndex = 22;
             // 
             // txtEngineSize
@@ -302,9 +317,10 @@
             txtEngineSize.BackColor = Color.FromArgb(236, 240, 241);
             txtEngineSize.BorderStyle = BorderStyle.None;
             txtEngineSize.Font = new Font("Segoe UI", 12F);
-            txtEngineSize.Location = new Point(32, 224);
+            txtEngineSize.Location = new Point(28, 168);
+            txtEngineSize.Margin = new Padding(3, 2, 3, 2);
             txtEngineSize.Name = "txtEngineSize";
-            txtEngineSize.Size = new Size(259, 27);
+            txtEngineSize.Size = new Size(227, 22);
             txtEngineSize.TabIndex = 20;
             // 
             // txtVehicleRegNo
@@ -312,9 +328,10 @@
             txtVehicleRegNo.BackColor = Color.FromArgb(236, 240, 241);
             txtVehicleRegNo.BorderStyle = BorderStyle.None;
             txtVehicleRegNo.Font = new Font("Segoe UI", 12F);
-            txtVehicleRegNo.Location = new Point(32, 153);
+            txtVehicleRegNo.Location = new Point(28, 115);
+            txtVehicleRegNo.Margin = new Padding(3, 2, 3, 2);
             txtVehicleRegNo.Name = "txtVehicleRegNo";
-            txtVehicleRegNo.Size = new Size(309, 27);
+            txtVehicleRegNo.Size = new Size(270, 22);
             txtVehicleRegNo.TabIndex = 19;
             // 
             // lblRecordCount
@@ -323,9 +340,9 @@
             lblRecordCount.BorderStyle = BorderStyle.FixedSingle;
             lblRecordCount.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblRecordCount.ForeColor = Color.FromArgb(29, 48, 88);
-            lblRecordCount.Location = new Point(309, 443);
+            lblRecordCount.Location = new Point(270, 332);
             lblRecordCount.Name = "lblRecordCount";
-            lblRecordCount.Size = new Size(67, 30);
+            lblRecordCount.Size = new Size(54, 23);
             lblRecordCount.TabIndex = 18;
             lblRecordCount.Text = "0 of 0";
             // 
@@ -334,9 +351,9 @@
             txtAvailable.AutoSize = true;
             txtAvailable.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             txtAvailable.ForeColor = Color.FromArgb(29, 48, 88);
-            txtAvailable.Location = new Point(393, 261);
+            txtAvailable.Location = new Point(344, 196);
             txtAvailable.Name = "txtAvailable";
-            txtAvailable.Size = new Size(93, 28);
+            txtAvailable.Size = new Size(76, 21);
             txtAvailable.TabIndex = 17;
             txtAvailable.Text = "Available";
             // 
@@ -345,9 +362,9 @@
             lblMake.AutoSize = true;
             lblMake.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblMake.ForeColor = Color.FromArgb(29, 48, 88);
-            lblMake.Location = new Point(393, 123);
+            lblMake.Location = new Point(344, 92);
             lblMake.Name = "lblMake";
-            lblMake.Size = new Size(62, 28);
+            lblMake.Size = new Size(50, 21);
             lblMake.TabIndex = 16;
             lblMake.Text = "Make";
             // 
@@ -356,9 +373,9 @@
             lblRentalPerDay.AutoSize = true;
             lblRentalPerDay.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblRentalPerDay.ForeColor = Color.FromArgb(29, 48, 88);
-            lblRentalPerDay.Location = new Point(32, 332);
+            lblRentalPerDay.Location = new Point(28, 249);
             lblRentalPerDay.Name = "lblRentalPerDay";
-            lblRentalPerDay.Size = new Size(179, 28);
+            lblRentalPerDay.Size = new Size(138, 21);
             lblRentalPerDay.TabIndex = 15;
             lblRentalPerDay.Text = "Rental Per Day      ";
             // 
@@ -367,9 +384,9 @@
             ldlDateRegistered.AutoSize = true;
             ldlDateRegistered.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             ldlDateRegistered.ForeColor = Color.FromArgb(29, 48, 88);
-            ldlDateRegistered.Location = new Point(32, 261);
+            ldlDateRegistered.Location = new Point(28, 196);
             ldlDateRegistered.Name = "ldlDateRegistered";
-            ldlDateRegistered.Size = new Size(156, 28);
+            ldlDateRegistered.Size = new Size(128, 21);
             ldlDateRegistered.TabIndex = 14;
             ldlDateRegistered.Text = "Date Registered";
             // 
@@ -378,9 +395,9 @@
             lblEngineSize.AutoSize = true;
             lblEngineSize.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblEngineSize.ForeColor = Color.FromArgb(29, 48, 88);
-            lblEngineSize.Location = new Point(32, 192);
+            lblEngineSize.Location = new Point(28, 144);
             lblEngineSize.Name = "lblEngineSize";
-            lblEngineSize.Size = new Size(180, 28);
+            lblEngineSize.Size = new Size(144, 21);
             lblEngineSize.TabIndex = 13;
             lblEngineSize.Text = "Engine Size/Power";
             // 
@@ -389,9 +406,9 @@
             lblVehicleRegNumber.AutoSize = true;
             lblVehicleRegNumber.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             lblVehicleRegNumber.ForeColor = Color.FromArgb(29, 48, 88);
-            lblVehicleRegNumber.Location = new Point(32, 123);
+            lblVehicleRegNumber.Location = new Point(28, 92);
             lblVehicleRegNumber.Name = "lblVehicleRegNumber";
-            lblVehicleRegNumber.Size = new Size(272, 28);
+            lblVehicleRegNumber.Size = new Size(219, 21);
             lblVehicleRegNumber.TabIndex = 12;
             lblVehicleRegNumber.Text = "Vehicle Registration Number";
             // 
@@ -400,9 +417,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Variable Text", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(29, 48, 88);
-            label1.Location = new Point(175, 29);
+            label1.Location = new Point(153, 22);
             label1.Name = "label1";
-            label1.Size = new Size(378, 46);
+            label1.Size = new Size(302, 36);
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
             label1.Click += label1_Click;
@@ -414,10 +431,10 @@
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(731, 713);
+            ClientSize = new Size(640, 535);
             Controls.Add(label1);
             Controls.Add(BtnNext);
             Controls.Add(btnExit);
@@ -427,6 +444,7 @@
             Controls.Add(btnAdd);
             Controls.Add(btnUpdate);
             Controls.Add(groupBox1);
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "FormMain";
             Text = "EVMotors";

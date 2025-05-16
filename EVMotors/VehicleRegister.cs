@@ -20,23 +20,23 @@ namespace FormEVMotors
 
 
 
-        public string VehicleRegNo
-        {
-            get => _vehicleRegNo;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Vehicle Registration Number is required.");
+      public string VehicleRegNo
+{
+        get => _vehicleRegNo;
+        set
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ArgumentException("Vehicle Registration Number is required.");
 
-                string pattern = @"^\d{3}-[A-Z]{1,2}-\d{3}$";
-                string input = value.Trim().ToUpper();
+        string pattern = @"^\d{3}-[A-Z]{1,2}-\d{3}$";
+        string input = value.Trim().ToUpper();
 
-                if (!Regex.IsMatch(input, pattern))
-                    throw new FormatException("Vehicle Registration Number must follow the format 123-AB-456");
+        if (!Regex.IsMatch(input, pattern))
+            throw new FormatException("Vehicle Registration Number must follow the format 123-AB-456.");
 
-                _vehicleRegNo = input;
-            }
-        }
+        _vehicleRegNo = input;
+    }
+}
         public string EngineSize
         {
             get => _engineSize;
