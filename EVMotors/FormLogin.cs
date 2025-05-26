@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FormEVMotors;
 using Microsoft.Data.SqlClient;
@@ -16,17 +9,12 @@ namespace MainFormEVMotors
 {
     public partial class FormLogin : Form
     {
-        private string connectionString = "Server=KYLEPC\\SQLEXPRESS;Database=EvMotors;Trusted_Connection=True;TrustServerCertificate=True;";
-
 
         public FormLogin()
         {
             InitializeComponent();
-            
-            
+                      
         }
-
-
 
 
         private void Form2_Load(object sender, EventArgs e)
@@ -53,57 +41,40 @@ namespace MainFormEVMotors
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string user = txtLogin.Text.Trim(); // Trim whitespace for better accuracy
+            string user = txtLogin.Text.Trim();
             string password = txtPassword.Text;
+
+            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (password.Contains(" "))
             {
                 MessageBox.Show("Password cannot contain spaces.", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+            try
             {
-                if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
+                bool isValid = DataAccess.ValidateLogin(user, password);
+
+                if (isValid)
                 {
-                    MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    this.Hide();
+                    FormMain mainForm = new FormMain();
+                    mainForm.ShowDialog();
+                    this.Close();
                 }
-                try
+                else
                 {
-                    connection.Open();
-
-                    string checkQuery = "SELECT * FROM users WHERE [username] = @user AND password = @password";
-
-                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, connection))
-                    {
-
-
-                        checkCmd.Parameters.AddWithValue("@user", user);
-                        checkCmd.Parameters.AddWithValue("@password", password);
-
-                        using (SqlDataReader reader = checkCmd.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-
-                                this.Hide();
-                                FormMain mainForm = new FormMain();
-                                mainForm.ShowDialog();
-                                this.Close();
-                            }
-                            else
-                            {
-
-                                MessageBox.Show("Incorrect username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
+                    MessageBox.Show("Incorrect username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch (Exception ex)
-                {
-                    // Consider logging the exception for debugging purposes
-                    MessageBox.Show($"An error occurred: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
