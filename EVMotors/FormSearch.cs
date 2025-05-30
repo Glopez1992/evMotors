@@ -24,9 +24,9 @@ namespace FormEVMotors
         string[] fields = { "VehicleRegNo", "Make", "EngineSize_Power", "DateRegistered",
                 "RentalPerDay", "Available" };
 
-        private SqlConnection connection = null;
-        private SqlDataReader reader = null;
-        private DataTable dataTable = null;
+        private SqlConnection connection;
+        private SqlDataReader reader;
+        private DataTable dataTable;
         public FormSearch()
         {
             InitializeComponent();
@@ -58,91 +58,81 @@ namespace FormEVMotors
             var selectedField = comboBoxField.Text;
             var selectedValue = txtValue.Text;
 
+            // Validate that none of the inputs are empty
             if (selectedOperator == "" || selectedField == "" || selectedValue == "")
             {
                 MessageBox.Show("Inputs cannot be empty.");
                 return;
             }
-            else
-                using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+
+            // Validate operator is in allowed list
+            if (!operatorsArray.Contains(selectedOperator))
+            {
+                MessageBox.Show("Please select a valid operator.");
+                return;
+            }
+
+            // Validate field is in allowed list
+            if (!fields.Contains(selectedField))
+            {
+                MessageBox.Show("Please select a valid field.");
+                return;
+            }
+
+            // Build the query dynamically with the selected field and operator
+            string query = $"SELECT * FROM VehicleRegister WHERE [{selectedField}] {selectedOperator} @value";
+            SqlParameter[] parameters;
+
+            // Handle DateRegistered field specifically, parsing the input to DateTime
+            if (selectedField == "DateRegistered")
+            {
+                DateTime parsedDate;
+                if (!DateTime.TryParse(selectedValue, out parsedDate))
                 {
-                    {
-                        connection.Open();
-                        string query = $"SELECT * FROM VehicleRegister WHERE [{selectedField}] {selectedOperator} @value";
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
-                            if (!operatorsArray.Contains(selectedOperator))
-                            {
-                                MessageBox.Show("Please select a valid operator.");
-                                return;
-                            }
-                            if (!fields.Contains(selectedField))
-                            {
-                                MessageBox.Show("Please select a valid field.");
-                            }
-
-                            if (selectedField == "DateRegistered") // or whatever your field is called
-                            {
-                                DateTime parsedDate;
-                                if (!DateTime.TryParse(selectedValue, out parsedDate))
-                                {
-                                    MessageBox.Show("Please enter a valid date in the format DD/MM/YYYY", "Invalid Date");
-                                    return;
-                                }
-
-                                command.Parameters.AddWithValue("@value", parsedDate);
-                            }
-
-                            else if (selectedField == "Available")
-
-                            {
-                                if (selectedValue.Trim().Equals("Yes", StringComparison.OrdinalIgnoreCase))
-                                    selectedValue = "1";
-                                else if (selectedValue.Trim().Equals("No", StringComparison.OrdinalIgnoreCase))
-                                    selectedValue = "0";
-                                else
-                                {
-                                    MessageBox.Show("Please enter 'Yes' or 'No' for availability.", "Input Error");
-                                    return;
-                                }
-
-                                // Add parameter as BIT (Boolean)
-                                command.Parameters.AddWithValue("@value", selectedValue == "1");
-
-
-                            }
-
-                            else if (selectedField == "RentalPerDay")
-                            {
-                                decimal rentalPerDay;
-                                if (!decimal.TryParse(txtValue.Text, out rentalPerDay))
-                                {
-                                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                                else
-                                    command.Parameters.AddWithValue("@value", rentalPerDay);
-                            }
-                            else
-                            { // For all other fields, add parameter normally
-                                command.Parameters.AddWithValue("@value", selectedValue);
-                            }
-
-                            using (var adapter = new SqlDataAdapter(command))
-                            {
-                                DataTable results = new DataTable();
-                                adapter.Fill(results); // Fills the DataTable with SQL results
-
-                                dataGridView.DataSource = null;
-                                dataGridView.Columns.Clear();
-                                dataGridView.DataSource = results;
-
-                            }// end Using SQL Command - command closes
-                        }
-
-
-                    }
+                    MessageBox.Show("Please enter a valid date in the format DD/MM/YYYY", "Invalid Date");
+                    return;
                 }
+                parameters = new[] { new SqlParameter("@value", parsedDate) };
+            }
+            // Handle Available field, converting Yes/No to boolean
+            else if (selectedField == "Available")
+            {
+                if (selectedValue.Trim().Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                    selectedValue = "1";
+                else if (selectedValue.Trim().Equals("No", StringComparison.OrdinalIgnoreCase))
+                    selectedValue = "0";
+                else
+                {
+                    MessageBox.Show("Please enter 'Yes' or 'No' for availability.", "Input Error");
+                    return;
+                }
+
+                parameters = new[] { new SqlParameter("@value", selectedValue == "1") };
+            }
+            // Handle RentalPerDay field, parsing to decimal
+            else if (selectedField == "RentalPerDay")
+            {
+                decimal rentalPerDay;
+                if (!decimal.TryParse(txtValue.Text, out rentalPerDay))
+                {
+                    MessageBox.Show("Rental Per Day must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                parameters = new[] { new SqlParameter("@value", rentalPerDay) };
+            }
+            // Handle all other fields normally
+            else
+            {
+                parameters = new[] { new SqlParameter("@value", selectedValue) };
+            }
+
+            // Execute the search query using the centralized DataAccess method
+            DataTable results = DataAccess.SearchVehicles(query, parameters);
+
+            // Clear previous data and show new search results in the DataGridView
+            dataGridView.DataSource = null;
+            dataGridView.Columns.Clear();
+            dataGridView.DataSource = results;
         }
 
         private void lblMake_Click(object sender, EventArgs e)

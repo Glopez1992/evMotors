@@ -1,218 +1,175 @@
-using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Data;
-using System.IO;
-using System.Text;
-using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
-using System.Text.RegularExpressions;
 using FormEVMotors;
-using System.CodeDom;
+using Microsoft.Data.SqlClient;
+using static FormEVMotors.DataAccess;
 
 
 namespace WinFormsApp1
 {
     public partial class FormMain : Form
     {
-
-        private SqlConnection connection = null;
-        private SqlDataReader reader = null;
-        private DataTable dataTable = null;
+        private DataTable dataTable;
         private bool dataChanged = true;
         private int currentIndex = 0;
-        
-        
+        private bool databaseConnected = false;
+
 
 
         public FormMain()
         {
             InitializeComponent();
+            this.Load += Form1_Load;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadData();
-            MessageBox.Show("Connected to Database");
-            DisplayRecord();
-            cobMake.DropDownHeight = 300;
-            
-
+            TryConnectToDatabase();
+            if (databaseConnected)
+            {
+                LoadData();
+                DisplayRecord();
+                cobMake.DropDownHeight = 300;
+            }
         }
 
         private void LoadData()
         {
-            
-            if (dataChanged == true)
+            ExecuteDbAction(() =>
             {
-                try
+                if (dataChanged == true)
                 {
-                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+                    try
                     {
-                        string query = "SELECT * FROM VehicleRegister";
-                        SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                        dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        
+                        dataTable = DataAccess.GetAllVehicles();
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    dataChanged = false;
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Exception Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            });
+
+            
         }
 
         private void DisplayRecord()
         {
-            LoadCarMakes();
-            txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
-            cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
-            txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize_Power"].ToString();
-            dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
-            txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
-            chkAvailable.Checked = Convert.ToBoolean(dataTable.Rows[currentIndex]["Available"]);
-            BtnPrevious.Enabled = currentIndex > 0;
-            BtnFirst.Enabled = currentIndex > 0;
-            BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
-            this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
-            int adjustedIndex = currentIndex + 1;
-            lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
+            ExecuteDbAction(() =>
+            {
+                LoadCarMakes();
+                txtVehicleRegNo.Text = dataTable.Rows[currentIndex]["VehicleRegNo"].ToString();
+                cobMake.Text = dataTable.Rows[currentIndex]["Make"].ToString();
+                txtEngineSize.Text = dataTable.Rows[currentIndex]["EngineSize_Power"].ToString();
+                dateTimePicker1.Text = dataTable.Rows[currentIndex]["DateRegistered"].ToString();
+                txtRentalPerDay.Text = dataTable.Rows[currentIndex]["RentalPerDay"].ToString();
+                chkAvailable.Checked = Convert.ToBoolean(dataTable.Rows[currentIndex]["Available"]);
+                BtnPrevious.Enabled = currentIndex > 0;
+                BtnFirst.Enabled = currentIndex > 0;
+                BtnNext.Enabled = currentIndex < dataTable.Rows.Count - 1;
+                this.Text = $"EvMotors - {DateTime.Now:dd/MM/yyyy}";
+                int adjustedIndex = currentIndex + 1;
+                lblRecordCount.Text = ($"{adjustedIndex.ToString()} of {dataTable.Rows.Count}");
+            });
+         
 
 
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            dataChanged = true;
-            try
+            ExecuteDbAction(() =>
             {
-
-                string vehicleRegNo = txtVehicleRegNo.Text;
-                string make = cobMake.Text;
-                string engineSize = txtEngineSize.Text;
-                DateTime dateRegistered = dateTimePicker1.Value;
-                string rentalPerDayInput = txtRentalPerDay.Text;
-                bool available = chkAvailable.Checked;
-
-                VehicleRegister.ValidateVehicleRegNo(vehicleRegNo, DataAccess.DataBaseConfig.ConnectionString);
-                VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
-                decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
-
-
-                VehicleRegister vehicle = new VehicleRegister(
-                    vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
-
-
+                dataChanged = true;
+                try
                 {
 
-                    // create and open connection
-                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
-                    {
-                        connection.Open();
-                        // create and execute SQL Command with parameters
-                        string query = "INSERT INTO VehicleRegister (VehicleRegNo, Make, EngineSize_Power, DateRegistered, RentalPerDay, Available)"
-                            + "VALUES (@VehicleRegNo,@Make, @EngineSize_Power,@DateRegistered, @RentalPerDay, @Available)";
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
-                            //use parameters to add data
-                            command.Parameters.AddWithValue("@VehicleRegNo", vehicleRegNo);
-                            command.Parameters.AddWithValue("@Make", make);
-                            command.Parameters.AddWithValue("@EngineSize_Power", engineSize);
-                            command.Parameters.AddWithValue("@DateRegistered", dateRegistered);
-                            command.Parameters.AddWithValue("@RentalPerDay", rentalPerDay);
-                            command.Parameters.AddWithValue("@Available", available);
-                            command.ExecuteNonQuery(); // execute SQL INSERT statement 
+                    string vehicleRegNo = txtVehicleRegNo.Text;
+                    string make = cobMake.Text;
+                    string engineSize = txtEngineSize.Text;
+                    DateTime dateRegistered = dateTimePicker1.Value;
+                    string rentalPerDayInput = txtRentalPerDay.Text;
+                    bool available = chkAvailable.Checked;
 
-                        }// end Using SQL Command - command closes
-                    } // end Using SQL connection - connection closes
-                    LoadData();
-                    currentIndex = dataTable.Rows.Count - 1;
-                    DisplayRecord();
-                    MessageBox.Show("Record Inserted");
+                    VehicleRegister.ValidateVehicleRegNo(vehicleRegNo, DataAccess.DataBaseConfig.ConnectionString);
+                    VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
+                    decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
+
+
+                    VehicleRegister vehicle = new VehicleRegister(
+                        vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
+
+                    {
+
+                        DataAccess.InsertVehicle(vehicle);
+                        LoadData();
+                        currentIndex = dataTable.Rows.Count - 1;
+                        DisplayRecord();
+                        MessageBox.Show("Record Inserted");
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error: " + exception.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error: " + exception.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            });
+
+
+
+
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            try
+            ExecuteDbAction(() =>
             {
-                string vehicleRegNo = txtVehicleRegNo.Text;
-                string make = cobMake.Text;
-                string engineSize = txtEngineSize.Text;
-                DateTime dateRegistered = dateTimePicker1.Value;
-                string rentalPerDayInput = txtRentalPerDay.Text;
-                bool available = chkAvailable.Checked;
-
-
-                VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
-                decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
-
-                var vehicle = new VehicleRegister(vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
-            {
-                connection.Open();
-                string updateQuery = @"
-                    UPDATE VehicleRegister
-                    SET Make = @Make,
-                        EngineSize_Power = @EngineSize_Power,
-                        DateRegistered = @DateRegistered,
-                        RentalPerDay = @RentalPerDay,
-                        Available = @Available
-                    WHERE VehicleRegNo = @VehicleRegNo";
-
-                using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+                try
                 {
-                    updateCommand.Parameters.AddWithValue("@Make", cobMake.Text);
-                    updateCommand.Parameters.AddWithValue("@EngineSize_Power", txtEngineSize.Text);
-                    updateCommand.Parameters.AddWithValue("@DateRegistered", dateTimePicker1.Value.Date);
-                    try
-                    {
-                        string rentalPerDayWithoutEuro = txtRentalPerDay.Text.Replace("€", "").Trim();
-                        decimal sf = decimal.Parse(rentalPerDayWithoutEuro);
-                        updateCommand.Parameters.AddWithValue("@RentalPerDay", sf);
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show(exception.Message);
-                    }
+                    string vehicleRegNo = txtVehicleRegNo.Text;
+                    string make = cobMake.Text;
+                    string engineSize = txtEngineSize.Text;
+                    DateTime dateRegistered = dateTimePicker1.Value;
+                    string rentalPerDayInput = txtRentalPerDay.Text;
+                    bool available = chkAvailable.Checked;
 
-                    updateCommand.Parameters.AddWithValue("@Available", chkAvailable.Checked);
+                    // Validations
+                    VehicleRegister.ValidateRentalPerDay(rentalPerDayInput);
+                    decimal rentalPerDay = decimal.Parse(rentalPerDayInput);
 
-                    updateCommand.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
+                    var vehicle = new VehicleRegister(vehicleRegNo, make, engineSize, dateRegistered, rentalPerDay, available);
 
-                    int rowsUpdated = updateCommand.ExecuteNonQuery();
+                    // Call the DataAccess method to update the record
+                    int rowsUpdated = DataAccess.UpdateVehicle(vehicle);
 
                     if (rowsUpdated > 0)
                     {
                         MessageBox.Show("Record updated successfully.");
+                        dataChanged = true;
+                        LoadData();
+                        DisplayRecord();
                     }
                     else
                     {
-                        MessageBox.Show("No record found with the given ID.");
+                        MessageBox.Show("No record found with the given VehicleRegNo.");
                     }
                 }
-            }
-            dataChanged = true;
-            LoadData();
-            DisplayRecord();
-            
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                dataChanged = true;
+                LoadData();
+                DisplayRecord();
+            });
+           
+
         }
-        
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -247,57 +204,52 @@ namespace WinFormsApp1
             DisplayRecord();
         }
 
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!chkAvailable.Checked)
+            ExecuteDbAction(() =>
             {
-                MessageBox.Show("Cannot delete currently hired vehicle.");
-            }
-            else
-            {
+                if (!chkAvailable.Checked)
+                {
+                    MessageBox.Show("Cannot delete currently hired vehicle.");
+                    return;
+                }
+
                 DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this vehicle?",
-                "Delete Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+                    "Are you sure you want to delete this vehicle?",
+                    "Delete Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    using (connection = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+                    int rowsDeleted = DataAccess.DeleteVehicle(txtVehicleRegNo.Text);
+
+                    if (rowsDeleted > 0)
                     {
-                        connection.Open();
-                        string deleteCommand = "DELETE FROM VehicleRegister WHERE VehicleRegNo = @VehicleRegNo";
-                        using (SqlCommand command = new SqlCommand(deleteCommand, connection))
-                        {
-                            command.Parameters.AddWithValue("@VehicleRegNo", txtVehicleRegNo.Text);
-                            command.ExecuteNonQuery();
-                        }
+                        dataChanged = true;
+                        LoadData();
+                        if (currentIndex > 0)
+                            currentIndex--;
+
+                        DisplayRecord();
+                        MessageBox.Show("Vehicle deleted successfully.");
                     }
-                    dataChanged = true;
-                    LoadData();
-                    if (currentIndex > 0)
-                        currentIndex = 0;
-
-                    if (currentIndex < dataTable.Rows.Count - 1)
-                        currentIndex = dataTable.Rows.Count - 1;
-
-                    DisplayRecord();
-                    MessageBox.Show("Vehicle deleted successfully.");
+                    else
+                    {
+                        MessageBox.Show("No vehicle found with the given VehicleRegNo.");
+                    }
                 }
-
-
-            }
-
+            });
+            
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to exit?",
-                "Exit Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            "Are you sure you want to exit the program?",
+            "Confirm Exit",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -308,25 +260,14 @@ namespace WinFormsApp1
         private void LoadCarMakes()
         {
             cobMake.Items.Clear();
-            using (SqlConnection conn = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT Make FROM CarMake";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            cobMake.Items.Add(reader.GetString(0));
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading car makes: " + ex.Message);
-                }
+                var makes = DataAccess.GetCarMakes();
+                cobMake.Items.AddRange(makes.ToArray());
+            }
+            catch (Exception ex)
+            {
+                
             }
         }
 
@@ -335,16 +276,55 @@ namespace WinFormsApp1
             FormSearch searchForm = new FormSearch();
             searchForm.ShowDialog();
         }
-        private void label1_Click(object sender, EventArgs e)
-        {
 
+        private void TryConnectToDatabase()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DataAccess.DataBaseConfig.ConnectionString))
+                {
+                    conn.Open();
+                    // If success, hide the retry panel
+                    panelRetry.Visible = false;
+                    databaseConnected = true;
+                }
+            }
+            catch (SqlException)
+            {
+                ShowRetryPanel();
+                databaseConnected = false;
+            }
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void ShowRetryPanel()
         {
+            // Optional: disable all other controls
+            foreach (Control c in this.Controls)
+            {
+                if (c != panelRetry)
+                    c.Enabled = false;
+            }
 
+            panelRetry.BringToFront();
+            panelRetry.Visible = true;
+        }
+   
+
+        private void ExecuteDbAction(Action action)
+        {
+            try
+            {
+                action();
+                TryConnectToDatabase();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowRetryPanel();
+                databaseConnected = false;
+            }
         }
     }
 }
-
 
