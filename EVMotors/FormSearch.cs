@@ -131,7 +131,6 @@ namespace FormEVMotors
 
             // Clear previous data and show new search results in the DataGridView
             dataGridView.DataSource = null;
-            dataGridView.Columns.Clear();
             dataGridView.DataSource = results;
         }
 
@@ -179,6 +178,9 @@ namespace FormEVMotors
             comboBoxOperator.Items.AddRange(operatorsArray);
         }
 
-   
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
