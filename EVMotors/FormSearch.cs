@@ -179,6 +179,9 @@ namespace FormEVMotors
             comboBoxOperator.Items.AddRange(operatorsArray);
         }
 
-   
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
