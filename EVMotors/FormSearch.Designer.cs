@@ -47,14 +47,14 @@ namespace FormEVMotors
             btnClear = new Button();
             btnSearchForm = new Button();
             dataGridView = new DataGridView();
+            comboBoxField = new ComboBox();
+            lblSearch = new Label();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
-            comboBoxField = new ComboBox();
-            lblSearch = new Label();
             groupBox2 = new GroupBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -235,56 +235,6 @@ namespace FormEVMotors
             dataGridView.TabIndex = 9;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             // 
-            // Column1
-            // 
-            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column1.FillWeight = 1F;
-            Column1.HeaderText = "VehicleRegNo\n\n";
-            Column1.MinimumWidth = 6;
-            Column1.Name = "Column1";
-            Column1.Width = 117;
-            // 
-            // Column2
-            // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column2.HeaderText = "Make\n\n";
-            Column2.MinimumWidth = 6;
-            Column2.Name = "Column2";
-            Column2.Width = 65;
-            // 
-            // Column3
-            // 
-            Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column3.HeaderText = "EngineSize\n\n";
-            Column3.MinimumWidth = 6;
-            Column3.Name = "Column3";
-            Column3.Width = 98;
-            // 
-            // Column4
-            // 
-            Column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column4.FillWeight = 1F;
-            Column4.HeaderText = "RegisteredDate";
-            Column4.MinimumWidth = 6;
-            Column4.Name = "Column4";
-            Column4.Width = 126;
-            // 
-            // Column5
-            // 
-            Column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column5.HeaderText = "RentalPerDay\n\n";
-            Column5.MinimumWidth = 6;
-            Column5.Name = "Column5";
-            Column5.Width = 115;
-            // 
-            // Column6
-            // 
-            Column6.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Column6.HeaderText = "Available";
-            Column6.MinimumWidth = 6;
-            Column6.Name = "Column6";
-            Column6.Width = 89;
-            // 
             // comboBoxField
             // 
             comboBoxField.BackColor = Color.FromArgb(236, 240, 241);
@@ -306,6 +256,62 @@ namespace FormEVMotors
             lblSearch.TabIndex = 12;
             lblSearch.Text = "Search EVMotors";
             lblSearch.Click += label1_Click;
+            // 
+            // Column1
+            // 
+            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column1.DataPropertyName = "VehicleRegNo";
+            Column1.FillWeight = 1F;
+            Column1.HeaderText = "VehicleRegNo\n\n";
+            Column1.MinimumWidth = 6;
+            Column1.Name = "Column1";
+            Column1.Width = 117;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column2.DataPropertyName = "Make";
+            Column2.HeaderText = "Make\n\n";
+            Column2.MinimumWidth = 6;
+            Column2.Name = "Column2";
+            Column2.Width = 65;
+            // 
+            // Column3
+            // 
+            Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column3.DataPropertyName = "EngineSize_Power";
+            Column3.HeaderText = "EngineSize\n\n";
+            Column3.MinimumWidth = 6;
+            Column3.Name = "Column3";
+            Column3.Width = 98;
+            // 
+            // Column4
+            // 
+            Column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column4.DataPropertyName = "DateRegistered";
+            Column4.FillWeight = 1F;
+            Column4.HeaderText = "RegisteredDate";
+            Column4.MinimumWidth = 6;
+            Column4.Name = "Column4";
+            Column4.Width = 126;
+            // 
+            // Column5
+            // 
+            Column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column5.DataPropertyName = "RentalPerDay";
+            Column5.HeaderText = "RentalPerDay\n\n";
+            Column5.MinimumWidth = 6;
+            Column5.Name = "Column5";
+            Column5.Width = 115;
+            // 
+            // Column6
+            // 
+            Column6.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column6.DataPropertyName = "Available";
+            Column6.HeaderText = "Available";
+            Column6.MinimumWidth = 6;
+            Column6.Name = "Column6";
+            Column6.Width = 89;
             // 
             // FormSearch
             // 

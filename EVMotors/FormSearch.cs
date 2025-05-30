@@ -131,7 +131,6 @@ namespace FormEVMotors
 
             // Clear previous data and show new search results in the DataGridView
             dataGridView.DataSource = null;
-            dataGridView.Columns.Clear();
             dataGridView.DataSource = results;
         }
 
