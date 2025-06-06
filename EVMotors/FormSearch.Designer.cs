@@ -35,9 +35,10 @@ namespace FormEVMotors
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             labelValue1 = new Label();
             btnSearchExit = new Button();
             comboBoxOperator = new ComboBox();
@@ -107,7 +108,7 @@ namespace FormEVMotors
             btnSearchExit.Name = "btnSearchExit";
             btnSearchExit.Size = new Size(96, 31);
             btnSearchExit.TabIndex = 22;
-            btnSearchExit.Text = "EXIT";
+            btnSearchExit.Text = "CLOSE";
             btnSearchExit.UseVisualStyleBackColor = false;
             btnSearchExit.Click += btnSearchExit_Click;
             // 
@@ -166,7 +167,7 @@ namespace FormEVMotors
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(96, 31);
             btnClear.TabIndex = 11;
-            btnClear.Text = "Close";
+            btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
             // 
@@ -208,30 +209,30 @@ namespace FormEVMotors
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(209, 233, 248);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.GridColor = SystemColors.InactiveCaption;
-            dataGridView.Location = new Point(6, 201);
-            dataGridView.Name = "dataGridView";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(209, 233, 248);
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaption;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridView.EnableHeadersVisualStyles = false;
+            dataGridView.GridColor = SystemColors.InactiveCaption;
+            dataGridView.Location = new Point(15, 213);
+            dataGridView.Name = "dataGridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView.RowHeadersWidth = 51;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridView.Size = new Size(668, 298);
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridView.Size = new Size(650, 298);
             dataGridView.TabIndex = 9;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             // 
@@ -280,10 +281,12 @@ namespace FormEVMotors
             // 
             Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             Column3.DataPropertyName = "EngineSize_Power";
-            Column3.HeaderText = "EngineSize\n\n";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Column3.DefaultCellStyle = dataGridViewCellStyle3;
+            Column3.HeaderText = "Engine";
             Column3.MinimumWidth = 6;
             Column3.Name = "Column3";
-            Column3.Width = 98;
+            Column3.Width = 74;
             // 
             // Column4
             // 
