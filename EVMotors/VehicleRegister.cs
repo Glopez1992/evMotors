@@ -51,7 +51,7 @@ namespace FormEVMotors
                 _engineSize = clean;
             }
         }
-        public DateTime RegisteredDate
+        public DateTime DateRegistered
         {
             get => _dateRegistered;
             set
@@ -108,12 +108,13 @@ namespace FormEVMotors
         }
 
 
-        public VehicleRegister(string vehicleRegNo, string make, string engineSize, DateTime registeredDate, decimal rentalPerDay, bool available)
+        public VehicleRegister(string vehicleRegNo, string make, string engineSize, DateTime dateRegistered
+            , decimal rentalPerDay, bool available)
         {
             VehicleRegNo = vehicleRegNo;
             Make = make;
             EngineSize = engineSize;
-            RegisteredDate = registeredDate;
+            DateRegistered = dateRegistered;
             RentalPerDay = rentalPerDay;
             Available = available;
 

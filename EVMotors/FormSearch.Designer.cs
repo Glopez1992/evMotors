@@ -35,9 +35,10 @@ namespace FormEVMotors
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             labelValue1 = new Label();
             btnSearchExit = new Button();
             comboBoxOperator = new ComboBox();
@@ -47,14 +48,14 @@ namespace FormEVMotors
             btnClear = new Button();
             btnSearchForm = new Button();
             dataGridView = new DataGridView();
+            comboBoxField = new ComboBox();
+            lblSearch = new Label();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
-            comboBoxField = new ComboBox();
-            lblSearch = new Label();
             groupBox2 = new GroupBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -78,7 +79,7 @@ namespace FormEVMotors
             groupBox2.Margin = new Padding(3, 2, 3, 2);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(3, 2, 3, 2);
-            groupBox2.Size = new Size(680, 560);
+            groupBox2.Size = new Size(680, 600);
             groupBox2.TabIndex = 11;
             groupBox2.TabStop = false;
             // 
@@ -102,12 +103,12 @@ namespace FormEVMotors
             btnSearchExit.FlatStyle = FlatStyle.Flat;
             btnSearchExit.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearchExit.ForeColor = Color.FromArgb(29, 48, 88);
-            btnSearchExit.Location = new Point(279, 507);
+            btnSearchExit.Location = new Point(282, 529);
             btnSearchExit.Margin = new Padding(3, 2, 3, 2);
             btnSearchExit.Name = "btnSearchExit";
             btnSearchExit.Size = new Size(96, 31);
             btnSearchExit.TabIndex = 22;
-            btnSearchExit.Text = "EXIT";
+            btnSearchExit.Text = "CLOSE";
             btnSearchExit.UseVisualStyleBackColor = false;
             btnSearchExit.Click += btnSearchExit_Click;
             // 
@@ -184,7 +185,7 @@ namespace FormEVMotors
             btnSearchForm.Name = "btnSearchForm";
             btnSearchForm.Size = new Size(96, 31);
             btnSearchForm.TabIndex = 10;
-            btnSearchForm.Text = "Search";
+            btnSearchForm.Text = "Run";
             btnSearchForm.UseVisualStyleBackColor = false;
             btnSearchForm.Click += btnSearchForm_Click;
             // 
@@ -195,6 +196,7 @@ namespace FormEVMotors
             dataGridViewCellStyle1.BackColor = Color.FromArgb(236, 240, 241);
             dataGridViewCellStyle1.ForeColor = Color.Gray;
             dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             dataGridView.BackgroundColor = Color.White;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.TopCenter;
@@ -205,76 +207,34 @@ namespace FormEVMotors
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(209, 233, 248);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ActiveCaption;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.GridColor = SystemColors.InactiveCaption;
-            dataGridView.Location = new Point(14, 191);
-            dataGridView.Name = "dataGridView";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(209, 233, 248);
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.ForeColor = SystemColors.ActiveCaption;
             dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridView.EnableHeadersVisualStyles = false;
+            dataGridView.GridColor = SystemColors.InactiveCaption;
+            dataGridView.Location = new Point(15, 213);
+            dataGridView.Name = "dataGridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(236, 240, 241);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView.RowHeadersWidth = 51;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridView.Size = new Size(649, 294);
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridView.Size = new Size(650, 298);
             dataGridView.TabIndex = 9;
-            // 
-            // Column1
-            // 
-            Column1.FillWeight = 1F;
-            Column1.HeaderText = "VehicleRegNo\n\n";
-            Column1.MinimumWidth = 6;
-            Column1.Name = "Column1";
-            Column1.Width = 125;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Make\n\n";
-            Column2.MinimumWidth = 6;
-            Column2.Name = "Column2";
-            Column2.Width = 125;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "EngineSize\n\n";
-            Column3.MinimumWidth = 6;
-            Column3.Name = "Column3";
-            Column3.Width = 125;
-            // 
-            // Column4
-            // 
-            Column4.FillWeight = 1F;
-            Column4.HeaderText = "RegisteredDate";
-            Column4.MinimumWidth = 6;
-            Column4.Name = "Column4";
-            Column4.Width = 125;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "RentalPerDay\n\n";
-            Column5.MinimumWidth = 6;
-            Column5.Name = "Column5";
-            Column5.Width = 125;
-            // 
-            // Column6
-            // 
-            Column6.MinimumWidth = 6;
-            Column6.Name = "Column6";
-            Column6.Width = 125;
+            dataGridView.CellContentClick += dataGridView_CellContentClick;
             // 
             // comboBoxField
             // 
@@ -297,6 +257,64 @@ namespace FormEVMotors
             lblSearch.TabIndex = 12;
             lblSearch.Text = "Search EVMotors";
             lblSearch.Click += label1_Click;
+            // 
+            // Column1
+            // 
+            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column1.DataPropertyName = "VehicleRegNo";
+            Column1.FillWeight = 1F;
+            Column1.HeaderText = "VehicleRegNo\n\n";
+            Column1.MinimumWidth = 6;
+            Column1.Name = "Column1";
+            Column1.Width = 117;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column2.DataPropertyName = "Make";
+            Column2.HeaderText = "Make\n\n";
+            Column2.MinimumWidth = 6;
+            Column2.Name = "Column2";
+            Column2.Width = 65;
+            // 
+            // Column3
+            // 
+            Column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column3.DataPropertyName = "EngineSize_Power";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Column3.DefaultCellStyle = dataGridViewCellStyle3;
+            Column3.HeaderText = "Engine";
+            Column3.MinimumWidth = 6;
+            Column3.Name = "Column3";
+            Column3.Width = 74;
+            // 
+            // Column4
+            // 
+            Column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column4.DataPropertyName = "DateRegistered";
+            Column4.FillWeight = 1F;
+            Column4.HeaderText = "RegisteredDate";
+            Column4.MinimumWidth = 6;
+            Column4.Name = "Column4";
+            Column4.Width = 126;
+            // 
+            // Column5
+            // 
+            Column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column5.DataPropertyName = "RentalPerDay";
+            Column5.HeaderText = "RentalPerDay\n\n";
+            Column5.MinimumWidth = 6;
+            Column5.Name = "Column5";
+            Column5.Width = 115;
+            // 
+            // Column6
+            // 
+            Column6.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Column6.DataPropertyName = "Available";
+            Column6.HeaderText = "Available";
+            Column6.MinimumWidth = 6;
+            Column6.Name = "Column6";
+            Column6.Width = 89;
             // 
             // FormSearch
             // 
@@ -326,12 +344,6 @@ namespace FormEVMotors
         private ComboBox comboBoxOperator;
         private TextBox txtValue;
         private DataGridView dataGridView;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
         private Button btnSearchForm;
         private Button btnClear;
         private Label labelValue1;
@@ -339,5 +351,11 @@ namespace FormEVMotors
         private Label lblField;
         private Button btnSearchExit;
         private Label label1;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
     }
 }

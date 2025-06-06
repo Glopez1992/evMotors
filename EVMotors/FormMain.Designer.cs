@@ -55,7 +55,10 @@
             lblVehicleRegNumber = new Label();
             label1 = new Label();
             sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
+            panelRetry = new Panel();
+            lblPanel = new Label();
             groupBox1.SuspendLayout();
+            panelRetry.SuspendLayout();
             SuspendLayout();
             // 
             // btnUpdate
@@ -265,12 +268,10 @@
             groupBox1.Size = new Size(585, 432);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
-            groupBox1.Enter += groupBox1_Enter;
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(28, 223);
-            dateTimePicker1.MaxDate = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 25;
@@ -422,12 +423,30 @@
             label1.Size = new Size(302, 36);
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
-            label1.Click += label1_Click;
             // 
             // sqlCommand1
             // 
             sqlCommand1.CommandTimeout = 30;
             sqlCommand1.EnableOptimizedParameterBinding = false;
+            // 
+            // panelRetry
+            // 
+            panelRetry.Controls.Add(lblPanel);
+            panelRetry.Dock = DockStyle.Fill;
+            panelRetry.Location = new Point(0, 0);
+            panelRetry.Name = "panelRetry";
+            panelRetry.Size = new Size(640, 535);
+            panelRetry.TabIndex = 12;
+            panelRetry.Visible = false;
+            // 
+            // lblPanel
+            // 
+            lblPanel.AutoSize = true;
+            lblPanel.Location = new Point(79, 239);
+            lblPanel.Name = "lblPanel";
+            lblPanel.Size = new Size(449, 15);
+            lblPanel.TabIndex = 0;
+            lblPanel.Text = "A database connection error has occured. Please close the application and try again.";
             // 
             // FormMain
             // 
@@ -435,6 +454,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(640, 535);
+            Controls.Add(panelRetry);
             Controls.Add(label1);
             Controls.Add(BtnNext);
             Controls.Add(btnExit);
@@ -451,6 +471,8 @@
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            panelRetry.ResumeLayout(false);
+            panelRetry.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -483,5 +505,7 @@
         private ComboBox cobMake;
         private DateTimePicker dateTimePicker1;
         private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
+        private Panel panelRetry;
+        private Label lblPanel;
     }
 }
