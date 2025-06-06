@@ -268,12 +268,10 @@
             groupBox1.Size = new Size(585, 432);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
-       
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(28, 223);
-            dateTimePicker1.MaxDate = new DateTime(2025, 5, 6, 0, 0, 0, 0);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 25;
@@ -425,7 +423,6 @@
             label1.Size = new Size(302, 36);
             label1.TabIndex = 11;
             label1.Text = "Welcome to EVMotors";
-            
             // 
             // sqlCommand1
             // 
@@ -441,7 +438,6 @@
             panelRetry.Size = new Size(640, 535);
             panelRetry.TabIndex = 12;
             panelRetry.Visible = false;
-            
             // 
             // lblPanel
             // 
